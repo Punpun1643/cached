@@ -10,8 +10,18 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
-import { SelectProduct } from '@/lib/db';
+// import { SelectProduct } from '@/lib/db';
 import { deleteProduct } from './actions';
+
+type SelectProduct = {
+  id: string,
+  imageUrl: string,
+  name: string,
+  status: string,
+  price: number,
+  stock: number,
+  availableAt: Date
+}
 
 export function Product({ product }: { product: SelectProduct }) {
   return (

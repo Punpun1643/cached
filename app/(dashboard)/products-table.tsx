@@ -16,10 +16,20 @@ import {
   CardTitle
 } from '@/components/ui/card';
 import { Product } from './product';
-import { SelectProduct } from '@/lib/db';
+// import { SelectProduct } from '@/lib/db';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+
+type SelectProduct = {
+  id: string,
+  imageUrl: string,
+  name: string,
+  status: string,
+  price: number,
+  stock: number,
+  availableAt: Date
+}
 
 export function ProductsTable({
   products,

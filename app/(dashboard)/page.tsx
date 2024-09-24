@@ -2,7 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { File, PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ProductsTable } from './products-table';
-import { getProducts } from '@/lib/db';
+// import { getProducts } from '@/lib/db';
 
 export default async function ProductsPage({
   searchParams
@@ -11,10 +11,35 @@ export default async function ProductsPage({
 }) {
   const search = searchParams.q ?? '';
   const offset = searchParams.offset ?? 0;
-  const { products, newOffset, totalProducts } = await getProducts(
-    search,
-    Number(offset)
-  );
+  // const { products, newOffset, totalProducts } = await getProducts(
+  //   search,
+  //   Number(offset)
+  // );
+
+  type SelectProduct = {
+    id: string,
+    imageUrl: string,
+    name: string,
+    status: string,
+    price: number,
+    stock: number,
+    availableAt: Date
+  }
+
+  const products: SelectProduct[] = 
+    [{
+      id: "5",
+      imageUrl:
+        'https://uwja77bygk2kgfqe.public.blob.vercel-storage.com/laptop-9bgUhjY491hkxiMDeSgqb9R5I3lHNL.webp',
+      name: 'Gaming Laptop Pro',
+      status: 'active',
+      price: 1299.00,
+      stock: 75,
+      availableAt: new Date()
+    }]
+
+  const newOffset = 1
+  const totalProducts = 1
 
   return (
     <Tabs defaultValue="all">
