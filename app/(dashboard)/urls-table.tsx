@@ -20,27 +20,27 @@ import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-type SelectProduct = {
-  id: string,
-  imageUrl: string,
-  name: string,
-  status: string,
-  price: number,
-  stock: number,
-  availableAt: Date
-}
+type Url = {
+  id: string;
+  imageUrl: string;
+  name: string;
+  status: string;
+  price: number;
+  stock: number;
+  availableAt: Date;
+};
 
 export function UrlsTable({
-  products,
+  urls,
   offset,
-  totalProducts
+  totalUrls: totalUrls
 }: {
-  products: SelectProduct[];
+  urls: Url[];
   offset: number;
-  totalProducts: number;
+  totalUrls: number;
 }) {
   let router = useRouter();
-  let productsPerPage = 5;
+  let urlsPerPage = 5;
 
   function prevPage() {
     router.back();
@@ -75,8 +75,8 @@ export function UrlsTable({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {products.map((product) => (
-              <Url key={product.id} product={product} />
+            {urls.map((url) => (
+              <Url key={url.id} url={url} />
             ))}
           </TableBody>
         </Table>
@@ -86,9 +86,9 @@ export function UrlsTable({
           <div className="text-xs text-muted-foreground">
             Showing{' '}
             <strong>
-              {Math.min(offset - productsPerPage, totalProducts) + 1}-{offset}
+              {Math.min(offset - urlsPerPage, totalUrls) + 1}-{offset}
             </strong>{' '}
-            of <strong>{totalProducts}</strong> products
+            of <strong>{totalUrls}</strong> urls
           </div>
           <div className="flex">
             <Button
@@ -96,7 +96,7 @@ export function UrlsTable({
               variant="ghost"
               size="sm"
               type="submit"
-              disabled={offset === productsPerPage}
+              disabled={offset === urlsPerPage}
             >
               <ChevronLeft className="mr-2 h-4 w-4" />
               Prev
@@ -106,7 +106,7 @@ export function UrlsTable({
               variant="ghost"
               size="sm"
               type="submit"
-              disabled={offset + productsPerPage > totalProducts}
+              disabled={offset + urlsPerPage > totalUrls}
             >
               Next
               <ChevronRight className="ml-2 h-4 w-4" />

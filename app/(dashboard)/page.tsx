@@ -17,37 +17,38 @@ export default async function ProductsPage({
   // );
 
   type SelectProduct = {
-    id: string,
-    imageUrl: string,
-    name: string,
-    status: string,
-    price: number,
-    stock: number,
-    availableAt: Date
-  }
+    id: string;
+    imageUrl: string;
+    name: string;
+    status: string;
+    price: number;
+    stock: number;
+    availableAt: Date;
+  };
 
-  const products: SelectProduct[] = 
-    [{
-      id: "5",
+  const urls: SelectProduct[] = [
+    {
+      id: '5',
       imageUrl:
         'https://uwja77bygk2kgfqe.public.blob.vercel-storage.com/laptop-9bgUhjY491hkxiMDeSgqb9R5I3lHNL.webp',
       name: 'Gaming Laptop Pro',
       status: 'active',
-      price: 1299.00,
+      price: 1299.0,
       stock: 75,
       availableAt: new Date()
-    }]
+    }
+  ];
 
-  const newOffset = 1
-  const totalProducts = 1
+  const newOffset = 1;
+  const totalUrls = 1;
 
   return (
     <Tabs defaultValue="all">
       <div className="flex items-center">
         <TabsList>
           <TabsTrigger value="all">All</TabsTrigger>
-          <TabsTrigger value="active">Active</TabsTrigger>
-          <TabsTrigger value="draft">Draft</TabsTrigger>
+          <TabsTrigger value="active">Pending</TabsTrigger>
+          <TabsTrigger value="draft">Read</TabsTrigger>
           <TabsTrigger value="archived" className="hidden sm:flex">
             Archived
           </TabsTrigger>
@@ -68,11 +69,7 @@ export default async function ProductsPage({
         </div>
       </div>
       <TabsContent value="all">
-        <UrlsTable
-          products={products}
-          offset={newOffset ?? 0}
-          totalProducts={totalProducts}
-        />
+        <UrlsTable urls={urls} offset={newOffset ?? 0} totalUrls={totalUrls} />
       </TabsContent>
     </Tabs>
   );
