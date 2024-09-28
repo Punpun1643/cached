@@ -15,8 +15,7 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
-import { Product } from './product';
-// import { SelectProduct } from '@/lib/db';
+import { Url } from './url';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -31,7 +30,7 @@ type SelectProduct = {
   availableAt: Date
 }
 
-export function ProductsTable({
+export function UrlsTable({
   products,
   offset,
   totalProducts
@@ -54,9 +53,9 @@ export function ProductsTable({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Products</CardTitle>
+        <CardTitle>Your current URLs</CardTitle>
         <CardDescription>
-          Manage your products and view their sales performance.
+          These are the current URLs in your list
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -66,12 +65,9 @@ export function ProductsTable({
               <TableHead className="hidden w-[100px] sm:table-cell">
                 <span className="sr-only">Image</span>
               </TableHead>
-              <TableHead>Name</TableHead>
+              <TableHead>Title</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead className="hidden md:table-cell">Price</TableHead>
-              <TableHead className="hidden md:table-cell">
-                Total Sales
-              </TableHead>
+              <TableHead className="hidden md:table-cell">Tag</TableHead>
               <TableHead className="hidden md:table-cell">Created at</TableHead>
               <TableHead>
                 <span className="sr-only">Actions</span>
@@ -80,7 +76,7 @@ export function ProductsTable({
           </TableHeader>
           <TableBody>
             {products.map((product) => (
-              <Product key={product.id} product={product} />
+              <Url key={product.id} product={product} />
             ))}
           </TableBody>
         </Table>

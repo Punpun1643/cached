@@ -23,7 +23,7 @@ type SelectProduct = {
   availableAt: Date
 }
 
-export function Product({ product }: { product: SelectProduct }) {
+export function Url({ product }: { product: SelectProduct }) {
   return (
     <TableRow>
       <TableCell className="hidden sm:table-cell">
@@ -41,7 +41,6 @@ export function Product({ product }: { product: SelectProduct }) {
           {product.status}
         </Badge>
       </TableCell>
-      <TableCell className="hidden md:table-cell">{`$${product.price}`}</TableCell>
       <TableCell className="hidden md:table-cell">{product.stock}</TableCell>
       <TableCell className="hidden md:table-cell">
         {product.availableAt.toLocaleDateString("en-US")}
