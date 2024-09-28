@@ -10,10 +10,20 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
-import { SelectProduct } from '@/lib/db';
+// import { SelectProduct } from '@/lib/db'
 import { deleteProduct } from './actions';
 
-export function Product({ product }: { product: SelectProduct }) {
+type Url = {
+  id: string;
+  imageUrl: string;
+  name: string;
+  status: string;
+  price: number;
+  stock: number;
+  availableAt: Date;
+};
+
+export function Url({ url }: { url: Url }) {
   return (
     <TableRow>
       <TableCell className="hidden sm:table-cell">
@@ -21,20 +31,19 @@ export function Product({ product }: { product: SelectProduct }) {
           alt="Product image"
           className="aspect-square rounded-md object-cover"
           height="64"
-          src={product.imageUrl}
+          src={url.imageUrl}
           width="64"
         />
       </TableCell>
-      <TableCell className="font-medium">{product.name}</TableCell>
+      <TableCell className="font-medium">{url.name}</TableCell>
       <TableCell>
         <Badge variant="outline" className="capitalize">
-          {product.status}
+          {url.status}
         </Badge>
       </TableCell>
-      <TableCell className="hidden md:table-cell">{`$${product.price}`}</TableCell>
-      <TableCell className="hidden md:table-cell">{product.stock}</TableCell>
+      <TableCell className="hidden md:table-cell">{url.stock}</TableCell>
       <TableCell className="hidden md:table-cell">
-        {product.availableAt.toLocaleDateString("en-US")}
+        {url.availableAt.toLocaleDateString('en-US')}
       </TableCell>
       <TableCell>
         <DropdownMenu>
@@ -47,9 +56,12 @@ export function Product({ product }: { product: SelectProduct }) {
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem>Edit</DropdownMenuItem>
+            <DropdownMenuItem>Archive</DropdownMenuItem>
             <DropdownMenuItem>
               <form action={deleteProduct}>
-                <button type="submit">Delete</button>
+                <button type="submit">
+                  <span className="text-red-600">Delete</span>
+                </button>
               </form>
             </DropdownMenuItem>
           </DropdownMenuContent>
