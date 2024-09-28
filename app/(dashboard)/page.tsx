@@ -16,26 +16,23 @@ export default async function ProductsPage({
   //   Number(offset)
   // );
 
-  type SelectProduct = {
-    id: string;
-    imageUrl: string;
-    name: string;
-    status: string;
-    price: number;
-    stock: number;
-    availableAt: Date;
-  };
+type Url = {
+  id: string;
+  title: string;
+  status: string;
+  tag: string;
+  address: string;
+  dateAdded: Date;
+};
 
-  const urls: SelectProduct[] = [
+  const urls: Url[] = [
     {
       id: '5',
-      imageUrl:
-        'https://uwja77bygk2kgfqe.public.blob.vercel-storage.com/laptop-9bgUhjY491hkxiMDeSgqb9R5I3lHNL.webp',
-      name: 'Gaming Laptop Pro',
-      status: 'active',
-      price: 1299.0,
-      stock: 75,
-      availableAt: new Date()
+      title: 'Gaming Laptop Pro',
+      status: 'read',
+      tag: 'Technology',
+      address: 'https://google.com',
+      dateAdded: new Date()
     }
   ];
 

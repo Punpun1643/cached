@@ -19,15 +19,15 @@ import { Url } from './url';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { URL } from 'url';
 
 type Url = {
   id: string;
-  imageUrl: string;
-  name: string;
+  title: string;
   status: string;
-  price: number;
-  stock: number;
-  availableAt: Date;
+  tag: string;
+  address: string;
+  dateAdded: Date;
 };
 
 export function UrlsTable({
@@ -62,9 +62,6 @@ export function UrlsTable({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="hidden w-[100px] sm:table-cell">
-                <span className="sr-only">Image</span>
-              </TableHead>
               <TableHead>Title</TableHead>
               <TableHead>Status</TableHead>
               <TableHead className="hidden md:table-cell">Tag</TableHead>
