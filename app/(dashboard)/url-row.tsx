@@ -22,7 +22,7 @@ type Url = {
   dateAdded: Date;
 };
 
-export function Url({ url }: { url: Url }) {
+export function UrlRow({ url }: { url: Url }) {
   return (
     <TableRow>
       <TableCell className="font-medium">{url.title}</TableCell>
@@ -50,7 +50,9 @@ export function Url({ url }: { url: Url }) {
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem className="cursor-pointer">Edit</DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer">Archive</DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer">
+              Archive
+            </DropdownMenuItem>
             <DropdownMenuItem>
               <form action={deleteProduct}>
                 <button type="submit">

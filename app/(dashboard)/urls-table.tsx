@@ -15,11 +15,10 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
-import { Url } from './url';
+import { UrlRow } from './url-row';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { URL } from 'url';
 
 type Url = {
   id: string;
@@ -73,7 +72,7 @@ export function UrlsTable({
           </TableHeader>
           <TableBody>
             {urls.map((url) => (
-              <Url key={url.id} url={url} />
+              <UrlRow key={url.id} url={url} />
             ))}
           </TableBody>
         </Table>
