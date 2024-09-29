@@ -7,7 +7,7 @@ import {
   varchar
 } from 'drizzle-orm/pg-core';
 
-export const statusEnum = pgEnum('status', ['read', 'pending'])
+export const statusEnum = pgEnum('status', ['read', 'pending', 'archived'])
 
 export const urls = pgTable('urls', {
   id: serial('id').primaryKey(),
