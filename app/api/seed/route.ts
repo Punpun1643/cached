@@ -1,112 +1,93 @@
-// import { db, products } from 'lib/db';
+import { db } from '@/lib/db/db'
+import { urls } from '@/lib/db/schema';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  return Response.json({
-    message: 'Uncomment to seed data after DB is set up.'
-  });
+  // return Response.json({
+  //   message: 'Uncomment to seed data after DB is set up.'
+  // });
 
-  // await db.insert(products).values([
-  //   {
-  //     id: 1,
-  //     imageUrl:
-  //       'https://uwja77bygk2kgfqe.public.blob.vercel-storage.com/smartphone-gaPvyZW6aww0IhD3dOpaU6gBGILtcJ.webp',
-  //     name: 'Smartphone X Pro',
-  //     status: 'active',
-  //     price: '999.00',
-  //     stock: 150,
-  //     availableAt: new Date()
-  //   },
-  //   {
-  //     id: 2,
-  //     imageUrl:
-  //       'https://uwja77bygk2kgfqe.public.blob.vercel-storage.com/earbuds-3rew4JGdIK81KNlR8Edr8NBBhFTOtX.webp',
-  //     name: 'Wireless Earbuds Ultra',
-  //     status: 'active',
-  //     price: '199.00',
-  //     stock: 300,
-  //     availableAt: new Date()
-  //   },
-  //   {
-  //     id: 3,
-  //     imageUrl:
-  //       'https://uwja77bygk2kgfqe.public.blob.vercel-storage.com/home-iTeNnmKSMnrykOS9IYyJvnLFgap7Vw.webp',
-  //     name: 'Smart Home Hub',
-  //     status: 'active',
-  //     price: '149.00',
-  //     stock: 200,
-  //     availableAt: new Date()
-  //   },
-  //   {
-  //     id: 4,
-  //     imageUrl:
-  //       'https://uwja77bygk2kgfqe.public.blob.vercel-storage.com/tv-H4l26crxtm9EQHLWc0ddrsXZ0V0Ofw.webp',
-  //     name: '4K Ultra HD Smart TV',
-  //     status: 'active',
-  //     price: '799.00',
-  //     stock: 50,
-  //     availableAt: new Date()
-  //   },
-  //   {
-  //     id: 5,
-  //     imageUrl:
-  //       'https://uwja77bygk2kgfqe.public.blob.vercel-storage.com/laptop-9bgUhjY491hkxiMDeSgqb9R5I3lHNL.webp',
-  //     name: 'Gaming Laptop Pro',
-  //     status: 'active',
-  //     price: '1299.00',
-  //     stock: 75,
-  //     availableAt: new Date()
-  //   },
-  //   {
-  //     id: 6,
-  //     imageUrl:
-  //       'https://uwja77bygk2kgfqe.public.blob.vercel-storage.com/headset-lYnRnpjDbZkB78lS7nnqEJFYFAUDg6.webp',
-  //     name: 'VR Headset Plus',
-  //     status: 'active',
-  //     price: '349.00',
-  //     stock: 120,
-  //     availableAt: new Date()
-  //   },
-  //   {
-  //     id: 7,
-  //     imageUrl:
-  //       'https://uwja77bygk2kgfqe.public.blob.vercel-storage.com/watch-S2VeARK6sEM9QFg4yNQNjHFaHc3sXv.webp',
-  //     name: 'Smartwatch Elite',
-  //     status: 'active',
-  //     price: '249.00',
-  //     stock: 250,
-  //     availableAt: new Date()
-  //   },
-  //   {
-  //     id: 8,
-  //     imageUrl:
-  //       'https://uwja77bygk2kgfqe.public.blob.vercel-storage.com/speaker-4Zk0Ctx5AvxnwNNTFWVK4Gtpru4YEf.webp',
-  //     name: 'Bluetooth Speaker Max',
-  //     status: 'active',
-  //     price: '99.00',
-  //     stock: 400,
-  //     availableAt: new Date()
-  //   },
-  //   {
-  //     id: 9,
-  //     imageUrl:
-  //       'https://uwja77bygk2kgfqe.public.blob.vercel-storage.com/charger-GzRr0NSkCj0ZYWkTMvxXGZQu47w9r5.webp',
-  //     name: 'Portable Charger Super',
-  //     status: 'active',
-  //     price: '59.00',
-  //     stock: 500,
-  //     availableAt: new Date()
-  //   },
-  //   {
-  //     id: 10,
-  //     imageUrl:
-  //       'https://uwja77bygk2kgfqe.public.blob.vercel-storage.com/thermostat-8GnK2LDE3lZAjUVtiBk61RrSuqSTF7.webp',
-  //     name: 'Smart Thermostat Pro',
-  //     status: 'active',
-  //     price: '199.00',
-  //     stock: 175,
-  //     availableAt: new Date()
-  //   }
-  // ]);
+  await db.insert(urls).values([
+    {
+      id: 1,
+      title: 'Neon Serverless Postgres — Ship faster',
+      status: 'pending',
+      tag: 'database',
+      address: 'https://neon.tech/',
+      dateAdded: new Date()
+    },
+    {
+      id: 2,
+      title: 'Drizzle with Neon Postgres',
+      status: 'read',
+      tag: 'database',
+      address: 'https://orm.drizzle.team/learn/tutorials/drizzle-with-neon',
+      dateAdded: new Date()
+    },
+    {
+      id: 3,
+      title: 'URLSearchParams - Web APIs | MDN',
+      status: 'pending',
+      tag: 'api',
+      address: 'https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams',
+      dateAdded: new Date()
+    },
+    {
+      id: 4,
+      title: 'use-debounce',
+      status: 'archived',
+      tag: 'tools',
+      address: 'https://www.npmjs.com/package/use-debounce',
+      dateAdded: new Date()
+    },
+    {
+      id: 5,
+      title: 'GitHub - nvm-sh/nvm: Node Version Manager - POSIX-compliant bash script to manage multiple active node.js versions',
+      status: 'archived',
+      tag: 'tools',
+      address: 'https://github.com/nvm-sh/nvm?tab=readme-ov-file#about',
+      dateAdded: new Date()
+    },
+    {
+      id: 6,
+      title: 'Simplify working and interacting with databases',
+      status: 'pending',
+      tag: 'package',
+      address: 'https://www.prisma.io/',
+      dateAdded: new Date()
+    },
+    {
+      id: 7,
+      title: 'mockAPI',
+      status: 'archived',
+      tag: 'package',
+      address: 'https://mockapi.io/',
+      dateAdded: new Date()
+    },
+    {
+      id: 8,
+      title: 'Learn Next.js: Adding Metadata',
+      status: 'read',
+      tag: 'next.js',
+      address: 'https://nextjs.org/learn/dashboard-app/adding-metadata',
+      dateAdded: new Date()
+    },
+    {
+      id: 9,
+      title: 'JavaScript Developer Roadmap: Step by step guide to learn JavaScript',
+      status: 'pending',
+      tag: 'javascript',
+      address: 'https://roadmap.sh/javascript',
+      dateAdded: new Date()
+    },
+    {
+      id: 10,
+      title: 'Disjoint Set Union - Algorithms for Competitive Programming',
+      status: 'pending',
+      tag: 'algorithm',
+      address: 'https://cp-algorithms.com/data_structures/disjoint_set_union.html#disjoint-set-union',
+      dateAdded: new Date()
+    },
+  ]);
 }
