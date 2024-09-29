@@ -2,8 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { File, PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { UrlsTable } from './urls-table';
-import { Url } from '@/lib/db/schema';
-// import { getProducts } from '@/lib/db';
+import { getUrls } from '@/lib/db/queries';
 
 export default async function ProductsPage({
   searchParams
@@ -12,25 +11,10 @@ export default async function ProductsPage({
 }) {
   const search = searchParams.q ?? '';
   const offset = searchParams.offset ?? 0;
-  // const { products, newOffset, totalProducts } = await getProducts(
-  //   search,
-  //   Number(offset)
-  // );
-
-
-  const urls: Url[] = [
-    {
-      id: 5,
-      title: 'Gaming Laptop Pro',
-      status: 'read',
-      tag: 'Technology',
-      address: 'https://google.com',
-      dateAdded: new Date()
-    }
-  ];
-
-  const newOffset = 1;
-  const totalUrls = 1;
+  const { urls, newOffset, totalUrls } = await getUrls(
+    search,
+    Number(offset)
+  );
 
   return (
     <Tabs defaultValue="all">
