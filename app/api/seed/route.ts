@@ -1,12 +1,11 @@
 import { db } from '@/lib/db/db'
 import { urls } from '@/lib/db/schema';
+import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
+// route to seed the db
 export async function GET() {
-  // return Response.json({
-  //   message: 'Uncomment to seed data after DB is set up.'
-  // });
 
   await db.insert(urls).values([
     {
@@ -90,4 +89,8 @@ export async function GET() {
       dateAdded: new Date()
     },
   ]);
+
+  return NextResponse.json({
+    message: 'Data seeded successfully'
+  });
 }
