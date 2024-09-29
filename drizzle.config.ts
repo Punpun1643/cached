@@ -9,6 +9,7 @@ export default defineConfig({
   dialect: 'postgresql',
   dbCredentials: {
     url: process.env.POSTGRES_URL!
-  }
+  },
+  verbose: true 
 }) 
 
