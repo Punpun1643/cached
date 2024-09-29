@@ -12,38 +12,24 @@ import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 // import { SelectProduct } from '@/lib/db'
 import { deleteProduct } from './actions';
+import { Url } from '@/lib/db/schema';
 
-type Url = {
-  id: string;
-  imageUrl: string;
-  name: string;
-  status: string;
-  price: number;
-  stock: number;
-  availableAt: Date;
-};
-
-export function Url({ url }: { url: Url }) {
+export function UrlRow({ url }: { url: Url }) {
   return (
     <TableRow>
-      <TableCell className="hidden sm:table-cell">
-        <Image
-          alt="Product image"
-          className="aspect-square rounded-md object-cover"
-          height="64"
-          src={url.imageUrl}
-          width="64"
-        />
-      </TableCell>
-      <TableCell className="font-medium">{url.name}</TableCell>
+      <TableCell className="font-medium">{url.title}</TableCell>
       <TableCell>
         <Badge variant="outline" className="capitalize">
           {url.status}
         </Badge>
       </TableCell>
-      <TableCell className="hidden md:table-cell">{url.stock}</TableCell>
+      <TableCell className="hidden md:table-cell capitalize">
+        <Badge variant="outline" className="capitalize">
+          {url.tag}
+        </Badge>
+      </TableCell>
       <TableCell className="hidden md:table-cell">
-        {url.availableAt.toLocaleDateString('en-US')}
+        {url.dateAdded.toLocaleDateString('en-US')}
       </TableCell>
       <TableCell>
         <DropdownMenu>
@@ -55,8 +41,10 @@ export function Url({ url }: { url: Url }) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Archive</DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer">Edit</DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer">
+              Archive
+            </DropdownMenuItem>
             <DropdownMenuItem>
               <form action={deleteProduct}>
                 <button type="submit">

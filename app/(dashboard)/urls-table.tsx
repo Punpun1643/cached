@@ -15,20 +15,11 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
-import { Url } from './url';
+import { UrlRow } from './url-row';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-
-type Url = {
-  id: string;
-  imageUrl: string;
-  name: string;
-  status: string;
-  price: number;
-  stock: number;
-  availableAt: Date;
-};
+import { Url } from '@/lib/db/schema';
 
 export function UrlsTable({
   urls,
@@ -62,9 +53,6 @@ export function UrlsTable({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="hidden w-[100px] sm:table-cell">
-                <span className="sr-only">Image</span>
-              </TableHead>
               <TableHead>Title</TableHead>
               <TableHead>Status</TableHead>
               <TableHead className="hidden md:table-cell">Tag</TableHead>
@@ -76,7 +64,7 @@ export function UrlsTable({
           </TableHeader>
           <TableBody>
             {urls.map((url) => (
-              <Url key={url.id} url={url} />
+              <UrlRow key={url.id} url={url} />
             ))}
           </TableBody>
         </Table>

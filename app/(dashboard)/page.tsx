@@ -2,6 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { File, PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { UrlsTable } from './urls-table';
+import { Url } from '@/lib/db/schema';
 // import { getProducts } from '@/lib/db';
 
 export default async function ProductsPage({
@@ -16,26 +17,15 @@ export default async function ProductsPage({
   //   Number(offset)
   // );
 
-  type SelectProduct = {
-    id: string;
-    imageUrl: string;
-    name: string;
-    status: string;
-    price: number;
-    stock: number;
-    availableAt: Date;
-  };
 
-  const urls: SelectProduct[] = [
+  const urls: Url[] = [
     {
-      id: '5',
-      imageUrl:
-        'https://uwja77bygk2kgfqe.public.blob.vercel-storage.com/laptop-9bgUhjY491hkxiMDeSgqb9R5I3lHNL.webp',
-      name: 'Gaming Laptop Pro',
-      status: 'active',
-      price: 1299.0,
-      stock: 75,
-      availableAt: new Date()
+      id: 5,
+      title: 'Gaming Laptop Pro',
+      status: 'read',
+      tag: 'Technology',
+      address: 'https://google.com',
+      dateAdded: new Date()
     }
   ];
 
