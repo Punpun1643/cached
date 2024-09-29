@@ -19,15 +19,7 @@ import { UrlRow } from './url-row';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-
-type Url = {
-  id: string;
-  title: string;
-  status: string;
-  tag: string;
-  address: string;
-  dateAdded: Date;
-};
+import { Url } from '@/lib/db/schema';
 
 export function UrlsTable({
   urls,

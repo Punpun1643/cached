@@ -2,6 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { File, PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { UrlsTable } from './urls-table';
+import { Url } from '@/lib/db/schema';
 // import { getProducts } from '@/lib/db';
 
 export default async function ProductsPage({
@@ -16,18 +17,10 @@ export default async function ProductsPage({
   //   Number(offset)
   // );
 
-type Url = {
-  id: string;
-  title: string;
-  status: string;
-  tag: string;
-  address: string;
-  dateAdded: Date;
-};
 
   const urls: Url[] = [
     {
-      id: '5',
+      id: 5,
       title: 'Gaming Laptop Pro',
       status: 'read',
       tag: 'Technology',

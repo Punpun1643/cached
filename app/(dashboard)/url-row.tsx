@@ -12,15 +12,7 @@ import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 // import { SelectProduct } from '@/lib/db'
 import { deleteProduct } from './actions';
-
-type Url = {
-  id: string;
-  title: string;
-  status: string;
-  tag: string;
-  address: string;
-  dateAdded: Date;
-};
+import { Url } from '@/lib/db/schema';
 
 export function UrlRow({ url }: { url: Url }) {
   return (
