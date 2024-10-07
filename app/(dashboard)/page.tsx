@@ -11,7 +11,6 @@ export default async function ProductsPage({
 }) {
   const search = searchParams.q ?? '';
   const offset = Number(searchParams.offset) || 0;
-  console.log("[Products page] offset: ", offset)
   const { urls, newOffset, totalUrls } = await getUrls(
     search,
     offset

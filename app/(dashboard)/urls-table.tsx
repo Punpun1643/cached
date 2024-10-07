@@ -41,9 +41,6 @@ export function UrlsTable({
     router.push(`/?offset=${offset}`, { scroll: false });
   }
 
-                
-  console.log(`offset: ${offset}`)
-  console.log(`total urls: ${totalUrls}`)
   return (
     <Card>
       <CardHeader>
@@ -80,8 +77,8 @@ export function UrlsTable({
               {totalUrls < MAX_URL_PER_PAGE 
                 ? `1-${totalUrls}`
                 : offset === totalUrls
-                ? `${offset - MAX_URL_PER_PAGE + 1}-${offset}`
-                : `${Math.min(offset - MAX_URL_PER_PAGE, totalUrls) + 1}-${offset}`}
+                ? `${offset - (totalUrls % MAX_URL_PER_PAGE === 0 ? MAX_URL_PER_PAGE : totalUrls % MAX_URL_PER_PAGE) + 1}-${totalUrls}` 
+                : `${offset - MAX_URL_PER_PAGE + 1}-${offset}`}
             </strong>{' '}
             of <strong>{totalUrls}</strong> urls
           </div>

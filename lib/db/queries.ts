@@ -15,14 +15,6 @@ export const getUrls = async (
 }> => {
   // TODO: implement search functionality
  
-  // if (offset == null) {
-  //   return {
-  //     urls: [],
-  //     newOffset: null,
-  //     totalUrls: 0 
-  //   }
-  // }
-
   let totalUrls = await db.select({ value: count() }).from(urls)
   let fetchedUrls = await db.select().from(urls)
     .limit(MAX_URL_PER_PAGE)
