@@ -20,6 +20,7 @@ import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Url } from '@/lib/db/schema';
+import { MAX_URL_PER_PAGE } from '@/lib/constants';
 
 export function UrlsTable({
   urls,
@@ -31,7 +32,6 @@ export function UrlsTable({
   totalUrls: number;
 }) {
   let router = useRouter();
-  let urlsPerPage = 5;
 
   function prevPage() {
     router.back();
@@ -74,7 +74,11 @@ export function UrlsTable({
           <div className="text-xs text-muted-foreground">
             Showing{' '}
             <strong>
-              {Math.min(offset - urlsPerPage, totalUrls) + 1}-{offset}
+              {totalUrls < MAX_URL_PER_PAGE 
+                ? `1-${totalUrls}`
+                : offset === totalUrls
+                ? `${offset - (totalUrls % MAX_URL_PER_PAGE === 0 ? MAX_URL_PER_PAGE : totalUrls % MAX_URL_PER_PAGE) + 1}-${totalUrls}` 
+                : `${offset - MAX_URL_PER_PAGE + 1}-${offset}`}
             </strong>{' '}
             of <strong>{totalUrls}</strong> urls
           </div>
@@ -84,7 +88,7 @@ export function UrlsTable({
               variant="ghost"
               size="sm"
               type="submit"
-              disabled={offset === urlsPerPage}
+              disabled={offset <= MAX_URL_PER_PAGE}
             >
               <ChevronLeft className="mr-2 h-4 w-4" />
               Prev
@@ -94,7 +98,7 @@ export function UrlsTable({
               variant="ghost"
               size="sm"
               type="submit"
-              disabled={offset + urlsPerPage > totalUrls}
+              disabled={offset === totalUrls}
             >
               Next
               <ChevronRight className="ml-2 h-4 w-4" />
