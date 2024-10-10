@@ -1,9 +1,10 @@
 import 'server-only'
 
 import { db } from '@/lib/db/db'
-import { Url, urls } from './schema'
+import { InsertUrl, Url, urls } from './schema'
 import { count } from 'drizzle-orm';
 import { MAX_URL_PER_PAGE } from '../constants';
+import { UrlObject } from 'url';
 
 export const getUrls = async (
   search: string,
@@ -31,6 +32,17 @@ export const getUrls = async (
     newOffset: newOffset,
     totalUrls: totalUrls[0].value
   }
+}
+
+export const addUrl = async ({ id, title, status, tag, address, dateAdded }: InsertUrl) => {
+  await db.insert(urls).values({
+    id: id,
+    title: title, 
+    status: status,
+    tag: tag,
+    address: address,
+    dateAdded: dateAdded
+  }) 
 }
 
 export const getUrlById = async () => {}
