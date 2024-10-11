@@ -42,7 +42,7 @@ export const addUrl = async ({ id, title, status, tag, address, dateAdded }: Ins
     tag: tag,
     address: address,
     dateAdded: dateAdded
-  }) 
+  }).returning() 
 }
 
 export const getUrlById = async () => {}
