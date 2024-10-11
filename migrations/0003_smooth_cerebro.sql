@@ -1,2 +1,3 @@
-ALTER TABLE "urls" ALTER COLUMN "date_added" SET DATA TYPE varchar(50);--> statement-breakpoint
-ALTER TABLE "urls" ALTER COLUMN "date_added" DROP DEFAULT;
+ALTER TABLE urls 
+ALTER COLUMN date_added TYPE timestamp USING date_added::timestamp without time zone;
+

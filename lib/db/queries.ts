@@ -34,15 +34,16 @@ export const getUrls = async (
   }
 }
 
-export const addUrl = async ({ id, title, status, tag, address, dateAdded }: InsertUrl) => {
-  await db.insert(urls).values({
-    id: id,
+export const addUrl = async ({ title, status, tag, address, dateAdded }: Omit<InsertUrl, "id">) => {
+  const insertedUrl = await db.insert(urls).values({
     title: title, 
     status: status,
     tag: tag,
     address: address,
     dateAdded: dateAdded
   }).returning() 
+
+  return insertedUrl 
 }
 
 export const getUrlById = async () => {}
