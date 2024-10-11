@@ -3,6 +3,7 @@
 import { LucideIcon, PlusCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button"
 import { handleAddUrl } from '@/lib/actions';
+import Error from 'next/error';
 
 interface IButtonProps {
   buttonText: string
@@ -10,7 +11,16 @@ interface IButtonProps {
 
 const IconButton = ({ buttonText }: IButtonProps) => {
   const handleClick = async () => {
-    await handleAddUrl() 
+    try {
+      await handleAddUrl()
+      alert("URL added successfully!")
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Failed to add URL", error)
+      } else {
+        console.error("Unknown error occured", error.error)
+      }
+    }
   }
   return (
     <Button size="sm" className="h-8 gap-1" onClick={handleClick}>

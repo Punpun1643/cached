@@ -6,7 +6,7 @@ import { InsertUrl } from "./db/schema";
 
 export async function handleAddUrl() {
   const urlData: InsertUrl = {
-    id: 102, // Ensure this is a plain number
+    id: 103, // Ensure this is a plain number
     title: "just testing", // Plain string
     status: "pending", // Plain string
     tag: "DB", // Plain string
