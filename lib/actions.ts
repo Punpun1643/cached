@@ -1,5 +1,6 @@
 'use server'
 
+import { revalidatePath } from "next/cache";
 import { addUrl } from "./db/queries"
 import { InsertUrl } from "./db/schema";
 
@@ -13,4 +14,5 @@ export async function handleAddUrl(address: string, tag: string) {
   };
 
   await addUrl(urlData);  
+  revalidatePath("/")
 }
