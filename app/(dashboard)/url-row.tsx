@@ -29,7 +29,7 @@ export function UrlRow({ url }: { url: Url }) {
         </Badge>
       </TableCell>
       <TableCell className="hidden md:table-cell">
-        {url.dateAdded.toLocaleDateString('en-US')}
+        {url.dateAdded}
       </TableCell>
       <TableCell>
         <DropdownMenu>

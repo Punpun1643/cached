@@ -15,7 +15,7 @@ export const urls = pgTable('urls', {
   status: statusEnum('status').notNull(),
   tag: varchar('tag', { length: 128 }),
   address: text('address').notNull(),
-  dateAdded: timestamp('date_added').notNull().defaultNow()
+  dateAdded: varchar('date_added', { length: 50 }).notNull()
 })
 
 // Export db types for other components
