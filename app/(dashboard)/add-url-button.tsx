@@ -8,8 +8,7 @@ const AddUrlButton = () => {
   const handleClick = async (url: string, tag: string) => {
     try {
       await handleAddUrl(url, tag)
-      alert("URL added successfully!")
-      // TODO: redirection and revalidate cache upon completion of adding url to make sure new url is reflected and dialog popup is closed.
+      alert("URL added successfully!")  // TODO: nice UI for this
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error("Failed to add URL", error)

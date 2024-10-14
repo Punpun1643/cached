@@ -4,6 +4,7 @@ import { LucideIcon, PlusCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -14,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from 'react';
+import { revalidatePath } from 'next/cache';
 
 
 interface IButtonProps {
@@ -83,7 +85,9 @@ const DialogButton = ({ onClick, icon: Icon, buttonText, submitIcon, buttonSubmi
             </div>
           </div>
           <DialogFooter>
-            <IconButton onClick={handleSubmit} icon={submitIcon} buttonText={buttonSubmitText} />
+            <DialogClose asChild>
+              <IconButton onClick={handleSubmit} icon={submitIcon} buttonText={buttonSubmitText} />
+            </DialogClose>
           </DialogFooter>
         </DialogContent>
       </Dialog>
