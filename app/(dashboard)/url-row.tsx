@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -10,14 +9,18 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
-// import { SelectProduct } from '@/lib/db'
 import { deleteProduct } from './actions';
 import { Url } from '@/lib/db/schema';
+import Link from 'next/link';
 
 export function UrlRow({ url }: { url: Url }) {
   return (
     <TableRow>
-      <TableCell className="font-medium">{url.title}</TableCell>
+      <TableCell className="font-medium">
+        <Link href={url.address} target="_blank" rel="noopener noreferrer">
+          {url.title}
+        </Link>
+      </TableCell>
       <TableCell>
         <Badge variant="outline" className="capitalize">
           {url.status}
