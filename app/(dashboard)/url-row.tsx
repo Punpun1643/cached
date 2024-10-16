@@ -17,7 +17,7 @@ export function UrlRow({ url }: { url: Url }) {
   return (
     <TableRow>
       <TableCell className="font-medium">
-        <Link href={url.address} target="_blank" rel="noopener noreferrer">
+        <Link href={url.address} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline decoration-sky-500 visited:text-zinc-500 visited:decoration-gray-500">
           {url.title}
         </Link>
       </TableCell>
