@@ -7,19 +7,39 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { MoreHorizontal } from 'lucide-react';
+import { Copy, MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { deleteProduct } from './actions';
 import { Url } from '@/lib/db/schema';
 import Link from 'next/link';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 export function UrlRow({ url }: { url: Url }) {
   return (
     <TableRow>
       <TableCell className="font-medium">
-        <Link href={url.address} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline decoration-sky-500 visited:text-zinc-500 visited:decoration-gray-500">
-          {url.title}
-        </Link>
+        <div className="flex items-center space-x-2">
+          <Link href={url.address} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline decoration-sky-500 visited:text-zinc-500 visited:decoration-gray-500">
+            {url.title}
+          </Link>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Copy className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Copy URL</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
       </TableCell>
       <TableCell>
         <Badge variant="outline" className="capitalize">
