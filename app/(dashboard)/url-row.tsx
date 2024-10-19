@@ -9,8 +9,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Copy, MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
-import { deleteProduct } from './actions';
-import { Url } from '@/lib/db/schema';
+import { SelectUrl } from '@/lib/db/schema';
 import Link from 'next/link';
 import {
   Tooltip,
@@ -19,8 +18,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { IconButton } from '@/components/ui/icon-button';
+import { handleDeleteUrl } from '@/lib/actions';
 
-export function UrlRow({ url }: { url: Url }) {
+export function UrlRow({ url }: { url: SelectUrl }) {
   const handleClick = async () => {
     if (navigator.clipboard && window.isSecureContext) {
       try {
@@ -33,6 +33,8 @@ export function UrlRow({ url }: { url: Url }) {
       window.alert(`Cannot copy address`)
     }
   }
+
+  const handleDeleteUrlWithId = handleDeleteUrl.bind(null, url.id)
 
   return (
     <TableRow>
@@ -81,7 +83,7 @@ export function UrlRow({ url }: { url: Url }) {
               Archive
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <form action={deleteProduct}>
+              <form action={handleDeleteUrlWithId}>
                 <button type="submit">
                   <span className="text-red-600">Delete</span>
                 </button>

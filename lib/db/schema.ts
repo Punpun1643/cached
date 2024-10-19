@@ -1,7 +1,6 @@
 import {
   pgTable,
   text,
-  timestamp,
   pgEnum,
   serial,
   varchar
@@ -19,6 +18,6 @@ export const urls = pgTable('urls', {
 })
 
 // Export db types for other components
-export type Url = typeof urls.$inferSelect
+export type SelectUrl = typeof urls.$inferSelect
 export type InsertUrl = typeof urls.$inferInsert
 

@@ -1,8 +1,8 @@
 'use server'
 
 import { revalidatePath } from "next/cache"
-import { addUrl } from "./db/queries"
-import { InsertUrl } from "./db/schema"
+import { addUrl, deleteUrlById } from "./db/queries"
+import { InsertUrl, SelectUrl } from "./db/schema"
 import * as cheerio from 'cheerio'
 
 export async function handleAddUrl(address: string, tag: string) {
@@ -19,5 +19,11 @@ export async function handleAddUrl(address: string, tag: string) {
   };
 
   await addUrl(urlData);  
+  revalidatePath("/")
+}
+
+
+export async function handleDeleteUrl(id: SelectUrl["id"]) {
+  await deleteUrlById(id)
   revalidatePath("/")
 }
