@@ -19,7 +19,7 @@ import { UrlRow } from './url-row';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Url } from '@/lib/db/schema';
+import { SelectUrl } from '@/lib/db/schema';
 import { MAX_URL_PER_PAGE } from '@/lib/constants';
 
 export function UrlsTable({
@@ -27,7 +27,7 @@ export function UrlsTable({
   offset,
   totalUrls: totalUrls
 }: {
-  urls: Url[];
+  urls: SelectUrl[];
   offset: number;
   totalUrls: number;
 }) {
@@ -74,10 +74,16 @@ export function UrlsTable({
           <div className="text-xs text-muted-foreground">
             Showing{' '}
             <strong>
-              {totalUrls < MAX_URL_PER_PAGE 
+              {totalUrls < MAX_URL_PER_PAGE
                 ? `1-${totalUrls}`
                 : offset === totalUrls
-                ? `${offset - (totalUrls % MAX_URL_PER_PAGE === 0 ? MAX_URL_PER_PAGE : totalUrls % MAX_URL_PER_PAGE) + 1}-${totalUrls}` 
+                ? `${
+                    offset -
+                    (totalUrls % MAX_URL_PER_PAGE === 0
+                      ? MAX_URL_PER_PAGE
+                      : totalUrls % MAX_URL_PER_PAGE) +
+                    1
+                  }-${totalUrls}`
                 : `${offset - MAX_URL_PER_PAGE + 1}-${offset}`}
             </strong>{' '}
             of <strong>{totalUrls}</strong> urls
