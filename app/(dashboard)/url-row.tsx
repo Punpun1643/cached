@@ -25,7 +25,7 @@ export function UrlRow({ url }: { url: Url }) {
     if (navigator.clipboard && window.isSecureContext) {
       try {
         await navigator.clipboard.writeText(url.address)
-        window.alert("Url is copied!")
+        window.alert("Url is copied!") // TODO: nice dialog alert
       } catch (err) {
         window.alert(`Cannot copy address ${err}`)
       }
