@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { LucideIcon, PlusCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button"
 import {
@@ -21,7 +22,9 @@ import { revalidatePath } from 'next/cache';
 interface IButtonProps {
   onClick: () => void
   icon?: LucideIcon
-  buttonText: string
+  buttonText?: string
+  variant?: "link" | "default" | "destructive" | "outline" | "secondary" | "ghost" | null | undefined
+  asChild?: boolean
 }
 
 interface IDialogButton {
@@ -94,16 +97,29 @@ const DialogButton = ({ onClick, icon: Icon, buttonText, submitIcon, buttonSubmi
     )
 }
 
-const IconButton = ({ onClick, icon: Icon, buttonText }: IButtonProps) => {
+const IconButton = React.forwardRef<HTMLButtonElement, IButtonProps>(({ 
+  onClick, 
+  icon: Icon, 
+  buttonText, 
+  variant = "default", 
+  asChild = false, 
+  ...props }: IButtonProps, ref) => {
   return (
-    <Button size="sm" className="h-8 gap-1" onClick={onClick}>
+    <Button 
+      size="sm" 
+      className="h-8 gap-1" 
+      onClick={onClick} 
+      variant={variant} 
+      ref={ref} 
+      {...props}>
       {Icon && <Icon className="h-3.5 w-3.5" />}
       <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
         {buttonText}
       </span>
     </Button>
   )
-}
+})
 
+IconButton.displayName = "IconButton"
 
 export { IconButton, DialogButton }

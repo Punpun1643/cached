@@ -18,8 +18,16 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { IconButton } from '@/components/ui/icon-button';
 
 export function UrlRow({ url }: { url: Url }) {
+  const handleClick = () => {
+    if (navigator.clipboard && window.isSecureContext) {
+
+    } else {
+
+    }
+  }
   return (
     <TableRow>
       <TableCell className="font-medium">
@@ -30,9 +38,7 @@ export function UrlRow({ url }: { url: Url }) {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Copy className="h-4 w-4" />
-                </Button>
+                <IconButton variant="ghost" icon={Copy} onClick={handleClick}/>
               </TooltipTrigger>
               <TooltipContent>
                 <p>Copy URL</p>
