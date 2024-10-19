@@ -7,19 +7,51 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { MoreHorizontal } from 'lucide-react';
+import { Copy, MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { deleteProduct } from './actions';
 import { Url } from '@/lib/db/schema';
 import Link from 'next/link';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { IconButton } from '@/components/ui/icon-button';
 
 export function UrlRow({ url }: { url: Url }) {
+  const handleClick = async () => {
+    if (navigator.clipboard && window.isSecureContext) {
+      try {
+        await navigator.clipboard.writeText(url.address)
+        window.alert("Url is copied!") // TODO: nice dialog alert
+      } catch (err) {
+        window.alert(`Cannot copy address ${err}`)
+      }
+    } else {
+      window.alert(`Cannot copy address`)
+    }
+  }
+
   return (
     <TableRow>
       <TableCell className="font-medium">
-        <Link href={url.address} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline decoration-sky-500 visited:text-zinc-500 visited:decoration-gray-500">
-          {url.title}
-        </Link>
+        <div className="flex items-center space-x-2">
+          <Link href={url.address} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline decoration-sky-500 visited:text-zinc-500 visited:decoration-gray-500">
+            {url.title}
+          </Link>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <IconButton variant="ghost" icon={Copy} onClick={handleClick}/>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Copy URL</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
       </TableCell>
       <TableCell>
         <Badge variant="outline" className="capitalize">
