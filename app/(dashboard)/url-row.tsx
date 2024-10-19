@@ -21,13 +21,19 @@ import {
 import { IconButton } from '@/components/ui/icon-button';
 
 export function UrlRow({ url }: { url: Url }) {
-  const handleClick = () => {
+  const handleClick = async () => {
     if (navigator.clipboard && window.isSecureContext) {
-
+      try {
+        await navigator.clipboard.writeText(url.address)
+        window.alert("Url is copied!")
+      } catch (err) {
+        window.alert(`Cannot copy address ${err}`)
+      }
     } else {
-
+      window.alert(`Cannot copy address`)
     }
   }
+
   return (
     <TableRow>
       <TableCell className="font-medium">
