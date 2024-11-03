@@ -5,11 +5,14 @@ import { Select, SelectContent,
 } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 import { SelectUrl, StatusEnum } from "@/lib/db/schema" 
+import { handleUpdateUrlStatus } from "@/lib/actions"
 
 const ToggleableBadge = ({ url }: { url : SelectUrl }) => {
+  const handleUpdateUrlWithIdAndStatus = async (newStatus: StatusEnum) => {
+     await handleUpdateUrlStatus(url.id, newStatus)
+  }
   return (
-    <div>
-    <Select>
+    <Select onValueChange={handleUpdateUrlWithIdAndStatus}>
       <SelectTrigger>
         <Badge variant="outline" className="capitalize cursor-pointer">
           <SelectValue placeholder={url.status} />
@@ -23,7 +26,6 @@ const ToggleableBadge = ({ url }: { url : SelectUrl }) => {
         ))}
       </SelectContent>
     </Select>
-    </div>
   )
 }
 

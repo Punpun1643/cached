@@ -22,4 +22,4 @@ export const urls = pgTable('urls', {
 // Export db types for other components
 export type SelectUrl = typeof urls.$inferSelect
 export type InsertUrl = typeof urls.$inferInsert
-
+export type StatusEnum = z.infer<typeof StatusEnum>

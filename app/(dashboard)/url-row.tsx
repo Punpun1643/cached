@@ -57,11 +57,6 @@ export function UrlRow({ url }: { url: SelectUrl }) {
         </div>
       </TableCell>
       <TableCell>
-        {/* badge */}
-        {/* <Badge variant="outline" className="capitalize"> */}
-        {/*   {url.status} */}
-        {/* </Badge> */}
-        {/* new toggable badge */}
         <ToggleableBadge url={url} />
       </TableCell>
       <TableCell className="hidden md:table-cell capitalize">
