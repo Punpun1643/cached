@@ -29,7 +29,6 @@ export async function handleDeleteUrl(id: SelectUrl["id"]) {
 }
 
 export const handleUpdateUrlStatus = async (id: SelectUrl["id"], status: StatusEnum) => {
-  console.log('called handleUpdateUrlStatus', id)
   const updateData: Pick<SelectUrl, "status"> = {
     status: status
   }

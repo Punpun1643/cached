@@ -60,7 +60,6 @@ export const addUrl = async ({
 export const getUrlById = async () => {};
 
 export const updateUrlStatus = async (urlId: SelectUrl["id"], status: Pick<SelectUrl, "status">) => {
-  console.log("called update url status", urlId + " " + status.status)
   await db.update(urls).set(status).where(eq(urls.id, urlId))
 }
 
