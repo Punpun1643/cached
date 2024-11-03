@@ -60,7 +60,6 @@ export function UrlRow({ url }: { url: SelectUrl }) {
         <ToggleableBadge url={url} />
       </TableCell>
       <TableCell className="hidden md:table-cell capitalize">
-        {/* badge */}
         <Badge variant="outline" className="capitalize">
           {url.tag}
         </Badge>
