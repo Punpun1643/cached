@@ -1,4 +1,3 @@
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -18,7 +17,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { IconButton } from '@/components/ui/icon-button';
-import { handleDeleteUrl, handleUpdateUrlStatus } from '@/lib/actions';
+import { handleDeleteUrl, handleUpdateUrlStatus, handleUpdateUrlTag } from '@/lib/actions';
 import { ToggleableBadge } from '@/components/ui/toggleable-badge';
 
 export function UrlRow({ url }: { url: SelectUrl }) {
@@ -61,13 +60,16 @@ export function UrlRow({ url }: { url: SelectUrl }) {
           url={url}
           options={StatusEnum.options}
           onValueChange={handleUpdateUrlStatus}
+          placeholder={url.status}
         />        
-        {/* <ToggleableBadge url={url} /> */}
       </TableCell>
       <TableCell className="hidden md:table-cell capitalize">
-        <Badge variant="outline" className="capitalize">
-          {url.tag}
-        </Badge>
+        <ToggleableBadge 
+          url={url}
+          options={["hello"]} // TODO: all current unique tag in the db
+          onValueChange={handleUpdateUrlTag}
+          placeholder={url.tag as string}
+        />
       </TableCell>
       <TableCell className="hidden md:table-cell">
         {url.dateAdded}

@@ -10,20 +10,21 @@ import { SelectUrl } from "@/lib/db/schema"
 
 interface IToggleableBadge<T, U extends string> {
   url: T,
-  options: string[],
+  options: U[],
   onValueChange: (id: SelectUrl["id"], newValue: U) => Promise<void>,
+  placeholder?: U
 }
 
-const ToggleableBadge = <T extends SelectUrl, U extends string>({ url, options, onValueChange }: IToggleableBadge<T, U>) => {
-  const handleUpdateUrlOption = async (newStatus: U) => {
-     await onValueChange(url.id, newStatus)
+const ToggleableBadge = <T extends SelectUrl, U extends string>({ url, options, onValueChange, placeholder }: IToggleableBadge<T, U>) => {
+  const handleUpdateUrlOption = async (newOption: U) => {
+     await onValueChange(url.id, newOption)
   }
 
   return (
     <Select onValueChange={handleUpdateUrlOption}>
       <SelectTrigger>
         <Badge variant="outline" className="capitalize cursor-pointer">
-          <SelectValue placeholder={url.status} />
+          <SelectValue placeholder={placeholder || ""} />
         </Badge>
       </SelectTrigger>
       <SelectContent>

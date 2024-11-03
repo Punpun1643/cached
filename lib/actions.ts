@@ -1,7 +1,7 @@
 'use server'
 
 import { revalidatePath } from "next/cache"
-import { addUrl, deleteUrlById, updateUrlStatus } from "./db/queries"
+import { addUrl, deleteUrlById, updateUrlStatus, updateUrlTag } from "./db/queries"
 import { InsertUrl, SelectUrl, StatusEnum } from "./db/schema"
 import * as cheerio from 'cheerio'
 
@@ -33,4 +33,8 @@ export const handleUpdateUrlStatus = async (id: SelectUrl["id"], status: StatusE
     status: status
   }
   await updateUrlStatus(id, updateData) 
+}
+
+export const handleUpdateUrlTag = async (id: SelectUrl["id"], tag: string) => {
+  await updateUrlTag(id, tag)
 }
