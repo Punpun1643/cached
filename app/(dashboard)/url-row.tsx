@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/tooltip"
 import { IconButton } from '@/components/ui/icon-button';
 import { handleDeleteUrl } from '@/lib/actions';
+import { ToggleableBadge } from '@/components/ui/toggleable-badge';
 
 export function UrlRow({ url }: { url: SelectUrl }) {
   const handleClick = async () => {
@@ -56,9 +57,7 @@ export function UrlRow({ url }: { url: SelectUrl }) {
         </div>
       </TableCell>
       <TableCell>
-        <Badge variant="outline" className="capitalize">
-          {url.status}
-        </Badge>
+        <ToggleableBadge url={url} />
       </TableCell>
       <TableCell className="hidden md:table-cell capitalize">
         <Badge variant="outline" className="capitalize">

@@ -2,7 +2,7 @@ import 'server-only';
 
 import { db } from '@/lib/db/db';
 import { InsertUrl, SelectUrl, urls } from './schema';
-import { count, eq } from 'drizzle-orm';
+import { asc, count, eq } from 'drizzle-orm';
 import { MAX_URL_PER_PAGE } from '../constants';
 
 export const getUrls = async (
@@ -19,6 +19,7 @@ export const getUrls = async (
   let fetchedUrls = await db
     .select()
     .from(urls)
+    .orderBy(asc(urls.id))
     .limit(MAX_URL_PER_PAGE)
     .offset(offset);
 
@@ -57,6 +58,10 @@ export const addUrl = async ({
 };
 
 export const getUrlById = async () => {};
+
+export const updateUrlStatus = async (urlId: SelectUrl["id"], status: Pick<SelectUrl, "status">) => {
+  await db.update(urls).set(status).where(eq(urls.id, urlId))
+}
 
 export const deleteUrlById = async (id: SelectUrl["id"]) => {
   await db.delete(urls).where(eq(urls.id, id))
