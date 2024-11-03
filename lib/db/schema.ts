@@ -1,3 +1,4 @@
+import { z } from "zod"
 import {
   pgTable,
   text,
@@ -6,7 +7,8 @@ import {
   varchar
 } from 'drizzle-orm/pg-core';
 
-export const statusEnum = pgEnum('status', ['read', 'pending', 'archived'])
+const statusEnum = pgEnum('status', ['read', 'pending', 'archived'])
+export const StatusEnum = z.enum(statusEnum.enumValues)
 
 export const urls = pgTable('urls', {
   id: serial('id').primaryKey(),
