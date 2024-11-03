@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Copy, MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
-import { SelectUrl } from '@/lib/db/schema';
+import { SelectUrl, StatusEnum } from '@/lib/db/schema';
 import Link from 'next/link';
 import {
   Tooltip,
@@ -18,7 +18,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { IconButton } from '@/components/ui/icon-button';
-import { handleDeleteUrl } from '@/lib/actions';
+import { handleDeleteUrl, handleUpdateUrlStatus } from '@/lib/actions';
 import { ToggleableBadge } from '@/components/ui/toggleable-badge';
 
 export function UrlRow({ url }: { url: SelectUrl }) {
@@ -57,7 +57,12 @@ export function UrlRow({ url }: { url: SelectUrl }) {
         </div>
       </TableCell>
       <TableCell>
-        <ToggleableBadge url={url} />
+        <ToggleableBadge 
+          url={url}
+          options={StatusEnum.options}
+          onValueChange={handleUpdateUrlStatus}
+        />        
+        {/* <ToggleableBadge url={url} /> */}
       </TableCell>
       <TableCell className="hidden md:table-cell capitalize">
         <Badge variant="outline" className="capitalize">
