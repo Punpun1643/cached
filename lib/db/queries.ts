@@ -68,3 +68,7 @@ export const updateUrlStatus = async (urlId: SelectUrl["id"], status: Pick<Selec
 export const deleteUrlById = async (id: SelectUrl["id"]) => {
   await db.delete(urls).where(eq(urls.id, id))
 };
+
+export const getUniqueTags = async (): Promise<{ tag: string }[]> => {
+  return await db.selectDistinct({ tag: urls.tag }).from(urls).orderBy(urls.tag)
+}

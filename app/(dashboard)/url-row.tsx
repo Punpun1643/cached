@@ -17,8 +17,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { IconButton } from '@/components/ui/icon-button';
-import { handleDeleteUrl, handleUpdateUrlStatus, handleUpdateUrlTag } from '@/lib/actions';
+import { fetchUniqueTags, handleDeleteUrl, handleUpdateUrlStatus, handleUpdateUrlTag } from '@/lib/actions';
 import { ToggleableBadge } from '@/components/ui/toggleable-badge';
+import { useEffect, useState } from 'react';
 
 export function UrlRow({ url }: { url: SelectUrl }) {
   const handleClick = async () => {
@@ -35,6 +36,18 @@ export function UrlRow({ url }: { url: SelectUrl }) {
   }
 
   const handleDeleteUrlWithId = handleDeleteUrl.bind(null, url.id)
+
+  const [currUniqueTags, setCurrUniqueTags] = useState<string[]>([])
+
+  useEffect(() => {
+    const updateUniqueTags = async () => {
+      const uniqueTags = await fetchUniqueTags()
+      const uniqueTagList = uniqueTags.map(({ tag }) => tag)
+      setCurrUniqueTags(uniqueTagList)
+    }
+
+    updateUniqueTags()
+  }, []) // TODO: fix real time list update (now need to refresh page to get the list)
 
   return (
     <TableRow>
@@ -66,7 +79,7 @@ export function UrlRow({ url }: { url: SelectUrl }) {
       <TableCell className="hidden md:table-cell capitalize">
         <ToggleableBadge 
           url={url}
-          options={["hello"]} // TODO: all current unique tag in the db
+          options={currUniqueTags}
           onValueChange={handleUpdateUrlTag}
           placeholder={url.tag as string}
         />
