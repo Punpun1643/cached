@@ -29,6 +29,20 @@
       "when": 1728583102428,
       "tag": "0003_smooth_cerebro",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1730727827045,
+      "tag": "0004_plain_captain_cross",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1730728042178,
+      "tag": "0005_white_shadow_king",
+      "breakpoints": true
     }
   ]
 }

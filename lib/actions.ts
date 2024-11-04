@@ -32,9 +32,14 @@ export const handleUpdateUrlStatus = async (id: SelectUrl["id"], status: StatusE
   const updateData: Pick<SelectUrl, "status"> = {
     status: status
   }
+
   await updateUrlStatus(id, updateData) 
 }
 
 export const handleUpdateUrlTag = async (id: SelectUrl["id"], tag: string) => {
-  await updateUrlTag(id, tag)
+  const updateData: Pick<SelectUrl, "tag"> = {
+    tag: tag
+  }
+
+  await updateUrlTag(id, updateData)
 }

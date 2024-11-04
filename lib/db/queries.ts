@@ -57,8 +57,8 @@ export const addUrl = async ({
   return insertedUrl;
 };
 
-export const updateUrlTag = async (urlId: SelectUrl["id"], tag: string) => {
-  // how can we create a typescript dynamic type based on the value of all tags in the DB
+export const updateUrlTag = async (urlId: SelectUrl["id"], tag: Pick<SelectUrl, "tag">) => {
+  await db.update(urls).set(tag).where(eq(urls.id, urlId))
 }
 
 export const updateUrlStatus = async (urlId: SelectUrl["id"], status: Pick<SelectUrl, "status">) => {
