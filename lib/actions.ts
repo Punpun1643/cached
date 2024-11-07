@@ -44,6 +44,6 @@ export const handleUpdateUrlTag = async (id: SelectUrl["id"], tag: string) => {
   await updateUrlTag(id, updateData)
 }
 
-export const fetchUniqueTags = async () => {
+export const fetchUniqueTags = async (): Promise<{ tag: string }[]> => {
   return await getUniqueTags()
 }

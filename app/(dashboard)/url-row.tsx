@@ -17,11 +17,13 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { IconButton } from '@/components/ui/icon-button';
-import { fetchUniqueTags, handleDeleteUrl, handleUpdateUrlStatus, handleUpdateUrlTag } from '@/lib/actions';
+import { fetchUniqueTags, handleAddUrl, handleDeleteUrl, handleUpdateUrlStatus, handleUpdateUrlTag } from '@/lib/actions';
 import { ToggleableBadge } from '@/components/ui/toggleable-badge';
 import { useEffect, useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 export function UrlRow({ url }: { url: SelectUrl }) {
+  // Handlers
   const handleClick = async () => {
     if (navigator.clipboard && window.isSecureContext) {
       try {
@@ -37,18 +39,27 @@ export function UrlRow({ url }: { url: SelectUrl }) {
 
   const handleDeleteUrlWithId = handleDeleteUrl.bind(null, url.id)
 
-  const [currUniqueTags, setCurrUniqueTags] = useState<string[]>([])
-
-  useEffect(() => {
-    const updateUniqueTags = async () => {
+  // Queries 
+  const query = useQuery({
+    queryKey: ["uniqueTags"],
+    queryFn: async () => {
       const uniqueTags = await fetchUniqueTags()
-      const uniqueTagList = uniqueTags.map(({ tag }) => tag)
-      setCurrUniqueTags(uniqueTagList)
+      return uniqueTags
     }
+  })
 
-    updateUniqueTags()
-  }, []) // TODO: fix real time list update (now need to refresh page to get the list)
+  // const [currUniqueTags, setCurrUniqueTags] = useState<string[]>([])
 
+  // useEffect(() => { // TODO: looks like need to redo fetching with react query, useEffect doesn't seem to be good
+  //   const updateUniqueTags = async () => {
+  //     const uniqueTags = await fetchUniqueTags()
+  //     const uniqueTagList = uniqueTags.map(({ tag }) => tag)
+  //     // setCurrUniqueTags(uniqueTagList)
+  //   }
+  //
+  //   updateUniqueTags()
+  // }, []) // TODO: fix real time list update (now need to refresh page to get the list)
+  //
   return (
     <TableRow>
       <TableCell className="font-medium">
@@ -79,7 +90,8 @@ export function UrlRow({ url }: { url: SelectUrl }) {
       <TableCell className="hidden md:table-cell capitalize">
         <ToggleableBadge 
           url={url}
-          options={currUniqueTags}
+          options={query.data?.map(({tag}) => tag) || ["hello"]}
+          // options={currUniqueTags}
           onValueChange={handleUpdateUrlTag}
           placeholder={url.tag as string}
         />
