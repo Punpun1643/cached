@@ -90,7 +90,7 @@ export function UrlRow({ url }: { url: SelectUrl }) {
       <TableCell className="hidden md:table-cell capitalize">
         <ToggleableBadge 
           url={url}
-          options={query.data?.map(({tag}) => tag) || ["hello"]}
+          options={query.data?.map(({tag}) => tag) || []}
           // options={currUniqueTags}
           onValueChange={handleUpdateUrlTag}
           placeholder={url.tag as string}
