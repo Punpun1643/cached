@@ -57,7 +57,9 @@ export const addUrl = async ({
   return insertedUrl;
 };
 
-export const getUrlById = async () => {};
+export const updateUrlTag = async (urlId: SelectUrl["id"], tag: Pick<SelectUrl, "tag">) => {
+  await db.update(urls).set(tag).where(eq(urls.id, urlId))
+}
 
 export const updateUrlStatus = async (urlId: SelectUrl["id"], status: Pick<SelectUrl, "status">) => {
   await db.update(urls).set(status).where(eq(urls.id, urlId))
@@ -66,3 +68,7 @@ export const updateUrlStatus = async (urlId: SelectUrl["id"], status: Pick<Selec
 export const deleteUrlById = async (id: SelectUrl["id"]) => {
   await db.delete(urls).where(eq(urls.id, id))
 };
+
+export const getUniqueTags = async (): Promise<{ tag: string }[]> => {
+  return await db.selectDistinct({ tag: urls.tag }).from(urls).orderBy(urls.tag)
+}

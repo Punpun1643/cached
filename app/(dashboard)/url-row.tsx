@@ -1,4 +1,3 @@
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -9,7 +8,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Copy, MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
-import { SelectUrl } from '@/lib/db/schema';
+import { SelectUrl, StatusEnum } from '@/lib/db/schema';
 import Link from 'next/link';
 import {
   Tooltip,
@@ -18,10 +17,12 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { IconButton } from '@/components/ui/icon-button';
-import { handleDeleteUrl } from '@/lib/actions';
+import { fetchUniqueTags, handleDeleteUrl, handleUpdateUrlStatus, handleUpdateUrlTag } from '@/lib/actions';
 import { ToggleableBadge } from '@/components/ui/toggleable-badge';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export function UrlRow({ url }: { url: SelectUrl }) {
+  // Handlers
   const handleClick = async () => {
     if (navigator.clipboard && window.isSecureContext) {
       try {
@@ -35,7 +36,24 @@ export function UrlRow({ url }: { url: SelectUrl }) {
     }
   }
 
-  const handleDeleteUrlWithId = handleDeleteUrl.bind(null, url.id)
+  const handleDeleteUrlWithId = () => {
+    mutation.mutate()
+  }
+
+  // Queries 
+  const { isPending, isError, data, error } = useQuery({
+    queryKey: ["uniqueTags"],
+    queryFn: () => fetchUniqueTags()
+  })
+
+  // Mutations
+  const queryClient = useQueryClient()
+  const mutation = useMutation({
+    mutationFn: handleDeleteUrl.bind(null, url.id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["uniqueTags"] })
+    }
+  }) 
 
   return (
     <TableRow>
@@ -57,12 +75,20 @@ export function UrlRow({ url }: { url: SelectUrl }) {
         </div>
       </TableCell>
       <TableCell>
-        <ToggleableBadge url={url} />
+        <ToggleableBadge 
+          url={url}
+          options={StatusEnum.options}
+          onValueChange={handleUpdateUrlStatus}
+          placeholder={url.status}
+        />        
       </TableCell>
       <TableCell className="hidden md:table-cell capitalize">
-        <Badge variant="outline" className="capitalize">
-          {url.tag}
-        </Badge>
+        <ToggleableBadge 
+          url={url}
+          options={data?.map(({tag}) => tag) || []}
+          onValueChange={handleUpdateUrlTag}
+          placeholder={url.tag as string}
+        />
       </TableCell>
       <TableCell className="hidden md:table-cell">
         {url.dateAdded}

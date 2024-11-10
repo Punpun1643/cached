@@ -6,22 +6,29 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
-import { SelectUrl, StatusEnum } from "@/lib/db/schema" 
-import { handleUpdateUrlStatus } from "@/lib/actions"
+import { SelectUrl } from "@/lib/db/schema" 
 
-const ToggleableBadge = ({ url }: { url : SelectUrl }) => {
-  const handleUpdateUrlWithIdAndStatus = async (newStatus: StatusEnum) => {
-     await handleUpdateUrlStatus(url.id, newStatus)
+interface IToggleableBadge<T, U extends string> {
+  url: T,
+  options: U[],
+  onValueChange: (id: SelectUrl["id"], newValue: U) => Promise<void>,
+  placeholder?: U
+}
+
+const ToggleableBadge = <T extends SelectUrl, U extends string>({ url, options, onValueChange, placeholder }: IToggleableBadge<T, U>) => {
+  const handleUpdateUrlOption = async (newOption: U) => {
+     await onValueChange(url.id, newOption)
   }
+
   return (
-    <Select onValueChange={handleUpdateUrlWithIdAndStatus}>
+    <Select onValueChange={handleUpdateUrlOption}>
       <SelectTrigger>
         <Badge variant="outline" className="capitalize cursor-pointer">
-          <SelectValue placeholder={url.status} />
+          <SelectValue placeholder={placeholder || ""} />
         </Badge>
       </SelectTrigger>
       <SelectContent>
-        {StatusEnum.options.map((option) => (
+        {options.map((option) => (
           <SelectItem key={option} value={option}>
             {option}
           </SelectItem>

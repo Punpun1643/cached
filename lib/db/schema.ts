@@ -14,7 +14,7 @@ export const urls = pgTable('urls', {
   id: serial('id').primaryKey(),
   title: text('title').notNull(),
   status: statusEnum('status').notNull(),
-  tag: varchar('tag', { length: 128 }),
+  tag: varchar('tag', { length: 128 }).notNull(),
   address: text('address').notNull(),
   dateAdded: varchar('date_added', { length: 50 }).notNull()
 })
