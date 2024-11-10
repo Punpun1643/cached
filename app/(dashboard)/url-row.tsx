@@ -19,7 +19,7 @@ import {
 import { IconButton } from '@/components/ui/icon-button';
 import { fetchUniqueTags, handleDeleteUrl, handleUpdateUrlStatus, handleUpdateUrlTag } from '@/lib/actions';
 import { ToggleableBadge } from '@/components/ui/toggleable-badge';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export function UrlRow({ url }: { url: SelectUrl }) {
   // Handlers
@@ -36,13 +36,24 @@ export function UrlRow({ url }: { url: SelectUrl }) {
     }
   }
 
-  const handleDeleteUrlWithId = handleDeleteUrl.bind(null, url.id)
+  const handleDeleteUrlWithId = () => {
+    mutation.mutate()
+  }
 
   // Queries 
   const { isPending, isError, data, error } = useQuery({
     queryKey: ["uniqueTags"],
     queryFn: () => fetchUniqueTags()
   })
+
+  // Mutations
+  const queryClient = useQueryClient()
+  const mutation = useMutation({
+    mutationFn: handleDeleteUrl.bind(null, url.id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["uniqueTags"] })
+    }
+  }) 
 
   return (
     <TableRow>
