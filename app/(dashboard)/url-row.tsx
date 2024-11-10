@@ -17,10 +17,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { IconButton } from '@/components/ui/icon-button';
-import { fetchUniqueTags, handleAddUrl, handleDeleteUrl, handleUpdateUrlStatus, handleUpdateUrlTag } from '@/lib/actions';
+import { fetchUniqueTags, handleDeleteUrl, handleUpdateUrlStatus, handleUpdateUrlTag } from '@/lib/actions';
 import { ToggleableBadge } from '@/components/ui/toggleable-badge';
-import { useEffect, useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 export function UrlRow({ url }: { url: SelectUrl }) {
   // Handlers
@@ -40,26 +39,11 @@ export function UrlRow({ url }: { url: SelectUrl }) {
   const handleDeleteUrlWithId = handleDeleteUrl.bind(null, url.id)
 
   // Queries 
-  const query = useQuery({
+  const { isPending, isError, data, error } = useQuery({
     queryKey: ["uniqueTags"],
-    queryFn: async () => {
-      const uniqueTags = await fetchUniqueTags()
-      return uniqueTags
-    }
+    queryFn: () => fetchUniqueTags()
   })
 
-  // const [currUniqueTags, setCurrUniqueTags] = useState<string[]>([])
-
-  // useEffect(() => { // TODO: looks like need to redo fetching with react query, useEffect doesn't seem to be good
-  //   const updateUniqueTags = async () => {
-  //     const uniqueTags = await fetchUniqueTags()
-  //     const uniqueTagList = uniqueTags.map(({ tag }) => tag)
-  //     // setCurrUniqueTags(uniqueTagList)
-  //   }
-  //
-  //   updateUniqueTags()
-  // }, []) // TODO: fix real time list update (now need to refresh page to get the list)
-  //
   return (
     <TableRow>
       <TableCell className="font-medium">
@@ -90,8 +74,7 @@ export function UrlRow({ url }: { url: SelectUrl }) {
       <TableCell className="hidden md:table-cell capitalize">
         <ToggleableBadge 
           url={url}
-          options={query.data?.map(({tag}) => tag) || []}
-          // options={currUniqueTags}
+          options={data?.map(({tag}) => tag) || []}
           onValueChange={handleUpdateUrlTag}
           placeholder={url.tag as string}
         />

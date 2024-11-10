@@ -14,6 +14,7 @@ The following are the stack used:
 - Framework - [Next.js (App Router)](https://nextjs.org)
 - Language - [TypeScript](https://www.typescriptlang.org)
 - Auth - [Auth.js](https://authjs.dev)
+- State management - [TanStack Query](https://tanstack.com/query/latest/docs/framework/react/quick-start)
 - Database - [Postgres](https://vercel.com/postgres)
 - Deployment - [Vercel](https://vercel.com/docs/concepts/next.js/overview)
 - Styling - [Tailwind CSS](https://tailwindcss.com)
