@@ -8,9 +8,9 @@ import AddUrlButton from './add-url-button';
 export default async function ProductsPage({
   searchParams
 }: {
-  searchParams: { q: string; offset: string };
+  searchParams: { query: string; offset: string };
 }) {
-  const search = searchParams.q ?? '';
+  const search = searchParams.query ?? '';
   const offset = Number(searchParams.offset) || 0;
   const { urls, newOffset, totalUrls } = await getUrls(
     search,

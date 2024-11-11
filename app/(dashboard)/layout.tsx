@@ -28,7 +28,7 @@ import { NavItem } from './nav-item';
 import { SearchInput } from './search';
 
 export default function DashboardLayout({
-  children
+  children,
 }: {
   children: React.ReactNode;
 }) {
