@@ -2,7 +2,7 @@ import 'server-only';
 
 import { db } from '@/lib/db/db';
 import { InsertUrl, SelectUrl, urls } from './schema';
-import { asc, count, eq } from 'drizzle-orm';
+import { asc, count, eq, or } from 'drizzle-orm';
 import { MAX_URL_PER_PAGE } from '../constants';
 
 export const getUrls = async (
@@ -20,7 +20,12 @@ export const getUrls = async (
   if (searchParam) {
     totalUrls = await db.select({ value: count() })
                         .from(urls)
-                        .where(eq(urls.tag, searchParam.toLowerCase()))
+                        .where(
+                          or(
+                            eq(urls.tag, searchParam.toLowerCase()), 
+                            // eq(urls.status, searchParam.toLowerCase())
+                          )
+                        )
     fetchedUrls = await db.select()
                           .from(urls)
                           .where(eq(urls.tag, searchParam))
