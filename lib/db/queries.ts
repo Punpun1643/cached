@@ -6,24 +6,37 @@ import { asc, count, eq } from 'drizzle-orm';
 import { MAX_URL_PER_PAGE } from '../constants';
 
 export const getUrls = async (
-  search: string,
+  searchParam: string,
   offset: number
 ): Promise<{
   urls: SelectUrl[];
   newOffset: number | null;
   totalUrls: number;
 }> => {
-  // TODO: implement search functionality
+ 
+  let fetchedUrls
+  let totalUrls
 
-  let totalUrls = await db.select({ value: count() }).from(urls);
-  let fetchedUrls = await db
-    .select()
-    .from(urls)
-    .orderBy(asc(urls.id))
-    .limit(MAX_URL_PER_PAGE)
-    .offset(offset);
+  if (searchParam) {
+    totalUrls = await db.select({ value: count() })
+                        .from(urls)
+                        .where(eq(urls.tag, searchParam.toLowerCase()))
+    fetchedUrls = await db.select()
+                          .from(urls)
+                          .where(eq(urls.tag, searchParam))
+                          .orderBy(asc(urls.id))
+                          .limit(MAX_URL_PER_PAGE)
+                          .offset(offset)
+  } else {
+    totalUrls = await db.select({ value: count() }).from(urls);
+    fetchedUrls = await db.select()
+                        .from(urls)
+                        .orderBy(asc(urls.id))
+                        .limit(MAX_URL_PER_PAGE)
+                        .offset(offset);
+  }
 
-  let newOffset = null;
+  let newOffset = null
   if (fetchedUrls.length === MAX_URL_PER_PAGE) {
     newOffset = offset + MAX_URL_PER_PAGE;
   } else if (fetchedUrls.length < MAX_URL_PER_PAGE) {

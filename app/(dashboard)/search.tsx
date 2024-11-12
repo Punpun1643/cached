@@ -19,6 +19,7 @@ export function SearchInput() {
 
     if (searchValue) {
       params.set('query', searchValue)
+      params.delete('offset') // clears out any offset for each new search attempt
     } else {
       params.delete('query')
     }

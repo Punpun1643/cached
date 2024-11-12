@@ -16,7 +16,7 @@ import {
   CardTitle
 } from '@/components/ui/card';
 import { UrlRow } from './url-row';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SelectUrl } from '@/lib/db/schema';
@@ -31,14 +31,24 @@ export function UrlsTable({
   offset: number;
   totalUrls: number;
 }) {
+
   let router = useRouter();
+  let searchParams = useSearchParams()
+  const pathName = usePathname() 
+  const params = new URLSearchParams(searchParams)
+  let searchValue = searchParams.get("query")
 
   function prevPage() {
     router.back();
   }
 
   function nextPage() {
-    router.push(`/?offset=${offset}`, { scroll: false });
+    if (searchValue) { // there is an ongoing query
+      params.set("query", searchValue)
+    } 
+
+    params.set("offset", offset.toString())
+    router.push(`${pathName}?${params.toString()}`, { scroll: false })
   }
 
   return (
@@ -75,7 +85,7 @@ export function UrlsTable({
             Showing{' '}
             <strong>
               {totalUrls < MAX_URL_PER_PAGE
-                ? `1-${totalUrls}`
+                ? `${totalUrls === 0 ? 0 : 1}-${totalUrls}`
                 : offset === totalUrls
                 ? `${
                     offset -
@@ -104,7 +114,7 @@ export function UrlsTable({
               variant="ghost"
               size="sm"
               type="submit"
-              disabled={offset === totalUrls}
+              disabled={offset === totalUrls || totalUrls === 0}
             >
               Next
               <ChevronRight className="ml-2 h-4 w-4" />
