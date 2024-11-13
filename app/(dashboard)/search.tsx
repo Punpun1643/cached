@@ -14,7 +14,6 @@ export function SearchInput() {
 
   function searchAction(formData: FormData) {
     let searchValue = formData.get('query') as string;
-
     const params = new URLSearchParams(searchParams)
 
     if (searchValue) {
