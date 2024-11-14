@@ -1,7 +1,7 @@
 import 'server-only';
 
 import { db } from '@/lib/db/db';
-import { InsertUrl, SelectUrl, urls } from './schema';
+import { InsertUrl, SelectUrl, StatusEnum, urls } from './schema';
 import { asc, count, eq, ilike, or } from 'drizzle-orm';
 import { MAX_URL_PER_PAGE } from '../constants';
 
@@ -17,8 +17,33 @@ export const getUrls = async (
   let fetchedUrls
   let totalUrls
 
+  const isSearchableTag = StatusEnum.options.some((status) => status === searchParam.toLowerCase())
+  console.log("Condition: ", isSearchableTag)
   if (searchParam) {
-    totalUrls = await db.select({ value: count() })
+    if (isSearchableTag) {
+        totalUrls = await db.select({ value: count() })
+                            .from(urls)
+                            .where(
+                              or(
+                                eq(urls.tag, searchParam.toLowerCase()), 
+                                ilike(urls.title, `%${searchParam}%`),
+                                eq(urls.status, searchParam.toLowerCase() as StatusEnum)
+                              )
+                            )
+        fetchedUrls = await db.select()
+                              .from(urls)
+                              .where(
+                                or(
+                                  eq(urls.tag, searchParam),
+                                  ilike(urls.title, `%${searchParam}%`),
+                                  eq(urls.status, searchParam.toLowerCase() as StatusEnum)
+                                )
+                              )
+                              .orderBy(asc(urls.id))
+                              .limit(MAX_URL_PER_PAGE)
+                              .offset(offset)
+    } else {
+      totalUrls = await db.select({ value: count() })
                         .from(urls)
                         .where(
                           or(
@@ -27,17 +52,19 @@ export const getUrls = async (
                           )
                         )
 
-    fetchedUrls = await db.select()
-                          .from(urls)
-                          .where(
-                            or(
-                              eq(urls.tag, searchParam),
-                              ilike(urls.title, `%${searchParam}%`)
-                            )
-                          )
-                          .orderBy(asc(urls.id))
-                          .limit(MAX_URL_PER_PAGE)
-                          .offset(offset)
+      fetchedUrls = await db.select()
+                              .from(urls)
+                              .where(
+                                or(
+                                  eq(urls.tag, searchParam),
+                                  ilike(urls.title, `%${searchParam}%`)
+                                )
+                              )
+                              .orderBy(asc(urls.id))
+                              .limit(MAX_URL_PER_PAGE)
+                              .offset(offset)
+    }
+
   } else {
     totalUrls = await db.select({ value: count() }).from(urls);
     fetchedUrls = await db.select()
