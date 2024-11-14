@@ -4,16 +4,17 @@ import { Button } from '@/components/ui/button';
 import { UrlsTable } from './urls-table';
 import { getUrls } from '@/lib/db/queries';
 import AddUrlButton from './add-url-button';
+import { Suspense } from 'react';
 
 export default async function ProductsPage({
   searchParams
 }: {
-  searchParams: { q: string; offset: string };
+  searchParams: { query: string; offset: string };
 }) {
-  const search = searchParams.q ?? '';
+  const searchParam = searchParams.query ?? '';
   const offset = Number(searchParams.offset) || 0;
   const { urls, newOffset, totalUrls } = await getUrls(
-    search,
+    searchParam,
     offset
   );
 
@@ -39,7 +40,9 @@ export default async function ProductsPage({
         </div>
       </div>
       <TabsContent value="all">
-        <UrlsTable urls={urls} offset={newOffset ?? 0} totalUrls={totalUrls} />
+        <Suspense>
+          <UrlsTable urls={urls} offset={newOffset ?? 0} totalUrls={totalUrls} />
+        </Suspense>
       </TabsContent>
     </Tabs>
   );
