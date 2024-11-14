@@ -18,7 +18,6 @@ export const getUrls = async (
   let totalUrls
 
   const isSearchableTag = StatusEnum.options.some((status) => status === searchParam.toLowerCase())
-  console.log("Condition: ", isSearchableTag)
   if (searchParam) {
     if (isSearchableTag) {
         totalUrls = await db.select({ value: count() })

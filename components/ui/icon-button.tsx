@@ -40,6 +40,8 @@ const DialogButton = ({ onClick, icon: Icon, buttonText, submitIcon, buttonSubmi
 
   const handleSubmit = () => {
     onClick(url, tag)
+    setUrl("")
+    setTag("")
   }
 
   return (
