@@ -1,14 +1,13 @@
-<div align="center"><strong>Next.js 14 Admin Dashboard Template</strong></div>
-<div align="center">Built with the Next.js App Router</div>
+<div align="center"><strong>Cached</strong></div>
+<div align="center">Built to manage my URLs</div>
 <br />
 <div align="center">
-<a href="https://next-admin-dash.vercel.app/">Demo</a>
-<span> · </span>
-<a href="https://vercel.com/templates/next.js/admin-dashboard-tailwind-postgres-react-nextjs">Clone & Deploy</a>
+<a href="https://url-storer.vercel.app/">Demo</a>
 <span>
 </div>
 
 ## Overview
+
 The following are the stack used:
 
 - Framework - [Next.js (App Router)](https://nextjs.org)
@@ -24,27 +23,9 @@ The following are the stack used:
 
 ## Getting Started
 
-During the deployment, Vercel will prompt you to create a new Postgres database. This will add the necessary environment variables to your project.
-
-### Set up DB
-
-Generate migrations:
-
-```bash
-npx drizzle-kit generate
-```
-
-Run migrations:
-
-```bash
-npx drizzle-kit migrate
-```
-
-Update the values in the `.env` file to set up your GitHub OAuth application.
-
 ### Start the development server
 
-Finally, run the following commands to start the development server:
+Run the following commands to start the development server:
 
 ```bash
 pnpm install
