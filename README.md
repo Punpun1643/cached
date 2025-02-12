@@ -24,27 +24,9 @@ The following are the stack used:
 
 ## Getting Started
 
-During the deployment, Vercel will prompt you to create a new Postgres database. This will add the necessary environment variables to your project.
-
-### Set up DB
-
-Generate migrations:
-
-```bash
-npx drizzle-kit generate
-```
-
-Run migrations:
-
-```bash
-npx drizzle-kit migrate
-```
-
-Update the values in the `.env` file to set up your GitHub OAuth application.
-
 ### Start the development server
 
-Finally, run the following commands to start the development server:
+Run the following commands to start the development server:
 
 ```bash
 pnpm install
