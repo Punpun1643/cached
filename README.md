@@ -1,9 +1,8 @@
 <div align="center"><strong>Cached</strong></div>
-<div align="center">URL management system, something something</div>
+<div align="center">Built to manage my URLs</div>
 <br />
 <div align="center">
 <a href="https://url-storer.vercel.app/">Demo</a>
-<span> · </span>
 <span>
 </div>
 
