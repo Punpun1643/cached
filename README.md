@@ -1,14 +1,14 @@
-<div align="center"><strong>Next.js 14 Admin Dashboard Template</strong></div>
-<div align="center">Built with the Next.js App Router</div>
+<div align="center"><strong>Cached</strong></div>
+<div align="center">URL management system, something something</div>
 <br />
 <div align="center">
-<a href="https://next-admin-dash.vercel.app/">Demo</a>
+<a href="https://url-storer.vercel.app/">Demo</a>
 <span> · </span>
-<a href="https://vercel.com/templates/next.js/admin-dashboard-tailwind-postgres-react-nextjs">Clone & Deploy</a>
 <span>
 </div>
 
 ## Overview
+
 The following are the stack used:
 
 - Framework - [Next.js (App Router)](https://nextjs.org)
