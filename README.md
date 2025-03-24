@@ -25,7 +25,8 @@ The following are the stack used:
 
 ### Start the development server
 
-Run the following commands to start the development server:
+Run the following commands to start the development 
+server:
 
 ```bash
 pnpm install
