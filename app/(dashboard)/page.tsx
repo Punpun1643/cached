@@ -1,11 +1,10 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { File } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { UrlsTable } from './urls-table';
 import { getUrls } from '@/lib/db/queries';
 import AddUrlButton from './add-url-button';
 import { Suspense } from 'react';
-import router from 'next/router';
 import { UrlTabs } from '@/components/url-tabs';
 
 export default async function ProductsPage({
@@ -20,7 +19,7 @@ export default async function ProductsPage({
     searchValue,
     offset,
     status
-  );
+  ); // note: when searchParams change, the server component is rerendered, causing getUrls to be re-executed
 
   return (
     <Tabs defaultValue="all">
