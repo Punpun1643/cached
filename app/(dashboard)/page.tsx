@@ -6,6 +6,7 @@ import { getUrls } from '@/lib/db/queries';
 import AddUrlButton from './add-url-button';
 import { Suspense } from 'react';
 import { UrlTabs } from '@/components/url-tabs';
+import Loading from './loading';
 
 export default async function ProductsPage({
   searchParams
@@ -35,42 +36,36 @@ export default async function ProductsPage({
           <AddUrlButton />
         </div>
       </div>
-      <TabsContent value="all">
-        <Suspense>
+      <Suspense fallback={<Loading />}>
+        <TabsContent value="all">
           <UrlsTable
             urls={urls}
             offset={newOffset ?? 0}
             totalUrls={totalUrls}
           />
-        </Suspense>
-      </TabsContent>
-      <TabsContent value="pending">
-        <Suspense>
+        </TabsContent>
+        <TabsContent value="pending">
           <UrlsTable
             urls={urls}
             offset={newOffset ?? 0}
             totalUrls={totalUrls}
           />
-        </Suspense>
-      </TabsContent>
-      <TabsContent value="read">
-        <Suspense>
+        </TabsContent>
+        <TabsContent value="read">
           <UrlsTable
             urls={urls}
             offset={newOffset ?? 0}
             totalUrls={totalUrls}
           />
-        </Suspense>
-      </TabsContent>
-      <TabsContent value="archived">
-        <Suspense>
+        </TabsContent>
+        <TabsContent value="archived">
           <UrlsTable
             urls={urls}
             offset={newOffset ?? 0}
             totalUrls={totalUrls}
           />
-        </Suspense>
-      </TabsContent>
+        </TabsContent>
+      </Suspense>
     </Tabs>
   );
 }
