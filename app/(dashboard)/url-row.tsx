@@ -14,10 +14,15 @@ import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+  TooltipTrigger
+} from '@/components/ui/tooltip';
 import { IconButton } from '@/components/ui/icon-button';
-import { fetchUniqueTags, handleDeleteUrl, handleUpdateUrlStatus, handleUpdateUrlTag } from '@/lib/actions';
+import {
+  fetchUniqueTags,
+  handleDeleteUrl,
+  handleUpdateUrlStatus,
+  handleUpdateUrlTag
+} from '@/lib/actions';
 import { ToggleableBadge } from '@/components/ui/toggleable-badge';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -26,46 +31,52 @@ export function UrlRow({ url }: { url: SelectUrl }) {
   const handleClick = async () => {
     if (navigator.clipboard && window.isSecureContext) {
       try {
-        await navigator.clipboard.writeText(url.address)
-        window.alert("Url is copied!") // TODO: nice dialog alert
+        await navigator.clipboard.writeText(url.address);
+        window.alert('Url is copied!'); // TODO: nice dialog alert
       } catch (err) {
-        window.alert(`Cannot copy address ${err}`)
+        window.alert(`Cannot copy address ${err}`);
       }
     } else {
-      window.alert(`Cannot copy address`)
+      window.alert(`Cannot copy address`);
     }
-  }
+  };
 
   const handleDeleteUrlWithId = () => {
-    mutation.mutate()
-  }
+    mutation.mutate();
+  };
 
-  // Queries 
+  // Queries
   const { isPending, isError, data, error } = useQuery({
-    queryKey: ["uniqueTags"],
+    queryKey: ['uniqueTags'],
     queryFn: () => fetchUniqueTags()
-  })
+  });
 
   // Mutations
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: handleDeleteUrl.bind(null, url.id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["uniqueTags"] })
+      queryClient.invalidateQueries({ queryKey: ['uniqueTags'] });
     }
-  }) 
+  });
 
   return (
     <TableRow>
       <TableCell className="font-medium">
         <div className="flex items-center space-x-2">
-          <Link href={url.address} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline decoration-sky-500 visited:text-zinc-500 visited:decoration-gray-500">
+          <Link
+            href={url.address}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 underline decoration-sky-500 visited:text-zinc-500 visited:decoration-gray-500"
+          >
             {url.title}
           </Link>
+
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <IconButton variant="ghost" icon={Copy} onClick={handleClick}/>
+                <IconButton variant="ghost" icon={Copy} onClick={handleClick} />
               </TooltipTrigger>
               <TooltipContent>
                 <p>Copy URL</p>
@@ -75,24 +86,22 @@ export function UrlRow({ url }: { url: SelectUrl }) {
         </div>
       </TableCell>
       <TableCell>
-        <ToggleableBadge 
+        <ToggleableBadge
           url={url}
           options={StatusEnum.options}
           onValueChange={handleUpdateUrlStatus}
           placeholder={url.status}
-        />        
+        />
       </TableCell>
       <TableCell className="hidden md:table-cell capitalize">
-        <ToggleableBadge 
+        <ToggleableBadge
           url={url}
-          options={data?.map(({tag}) => tag) || []}
+          options={data?.map(({ tag }) => tag) || []}
           onValueChange={handleUpdateUrlTag}
           placeholder={url.tag as string}
         />
       </TableCell>
-      <TableCell className="hidden md:table-cell">
-        {url.dateAdded}
-      </TableCell>
+      <TableCell className="hidden md:table-cell">{url.dateAdded}</TableCell>
       <TableCell>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
