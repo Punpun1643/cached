@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useTransition } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Card,
   CardContent,
@@ -9,7 +9,7 @@ import {
   CardTitle
 } from './ui/card';
 
-import { sanitize } from 'dompurify';
+import DOMPurify from 'dompurify';
 
 export function UrlContentViewer({ url }: { url: string }) {
   const [content, setContent] = useState<string | null>(null);
@@ -50,7 +50,11 @@ export function UrlContentViewer({ url }: { url: string }) {
         {error && <div className="text-red-500">Error: {error}</div>}
         {content && (
           <div>
-            <div dangerouslySetInnerHTML={{ __html: sanitize(content) }}></div>
+            {/* <div
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
+            ></div> */}
+            {/* we should sanitize for security purpose, but format is messed up */}
+            <div dangerouslySetInnerHTML={{ __html: content }}></div>
           </div>
         )}
       </CardContent>

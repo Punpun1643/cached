@@ -25,8 +25,12 @@ import {
 } from '@/lib/actions';
 import { ToggleableBadge } from '@/components/ui/toggleable-badge';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 export function UrlRow({ url }: { url: SelectUrl }) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   // Handlers
   const handleClick = async () => {
     if (navigator.clipboard && window.isSecureContext) {
@@ -60,19 +64,23 @@ export function UrlRow({ url }: { url: SelectUrl }) {
     }
   });
 
+  const createUrlWithParams = () => {
+    const params = new URLSearchParams(searchParams);
+    params.set('url', url.address);
+    return `${pathname}?${params.toString()}`;
+  };
+
   return (
     <TableRow>
       <TableCell className="font-medium">
         <div className="flex items-center space-x-2">
           <Link
-            href={url.address}
-            target="_blank"
-            rel="noopener noreferrer"
+            href={createUrlWithParams()}
             className="text-blue-600 underline decoration-sky-500 visited:text-zinc-500 visited:decoration-gray-500"
+            scroll={false}
           >
             {url.title}
           </Link>
-
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
