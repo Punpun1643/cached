@@ -8,6 +8,7 @@ import { Suspense } from 'react';
 import { UrlTabs } from '@/components/url-tabs';
 import Loading from './loading';
 import { UrlContentViewer } from '@/components/url-content-viewer';
+import { cn } from '@/lib/utils';
 
 export default async function ProductsPage({
   searchParams
@@ -31,8 +32,13 @@ export default async function ProductsPage({
   ); // note: when searchParams change, the server component is rerendered, causing getUrls to be re-executed
 
   return (
-    <div>
-      <div>
+    <div
+      className={cn(
+        'grid gap-4',
+        selectedUrl ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'
+      )}
+    >
+      <div className="md:overflow-auto md:max-h-[calc(100vh-4rem)]">
         <Tabs defaultValue="all">
           <div className="flex items-center">
             <UrlTabs />
@@ -78,7 +84,9 @@ export default async function ProductsPage({
           </Suspense>
         </Tabs>
       </div>
-      <div>{selectedUrl && <UrlContentViewer url={selectedUrl} />}</div>
+      <div className="hidden md:block md:overflow-auto md:max-h-[calc(100vh-4rem)]">
+        {selectedUrl && <UrlContentViewer url={selectedUrl} />}
+      </div>
     </div>
   );
 }
