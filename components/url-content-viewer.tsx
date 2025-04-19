@@ -41,7 +41,38 @@ export function UrlContentViewer({ url }: { url: string }) {
           throw new Error('Failed to fetch content');
         }
         const data = await response.json();
-        setContent(data.content);
+
+        const sanitizedContent = DOMPurify.sanitize(data.content, {
+          ALLOWED_TAGS: [
+            'p',
+            'a',
+            'b',
+            'i',
+            'em',
+            'strong',
+            'h1',
+            'h2',
+            'h3',
+            'h4',
+            'h5',
+            'h6',
+            'ul',
+            'ol',
+            'li',
+            'br',
+            'div',
+            'span',
+            'img',
+            'article',
+            'section'
+          ],
+          ALLOWED_ATTR: ['href', 'src', 'class', 'id', 'alt', 'title'],
+          FORBID_TAGS: ['style', 'script'],
+          ADD_TAGS: ['iframe'],
+          ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling']
+        });
+
+        setContent(sanitizedContent);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load content');
       } finally {
@@ -76,11 +107,7 @@ export function UrlContentViewer({ url }: { url: string }) {
         {isLoading && <div>Loading content...</div>}
         {error && <div className="text-red-500">Error: {error}</div>}
         {content && (
-          <div className="overflow-x-auto max-w-full">
-            {/* <div
-              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
-            ></div> */}
-            {/* we should sanitize for security purpose, but format is messed up */}
+          <div className="prose prose-sm md:prose-base lg:prose-lg dark:prose-invert max-w-none overflow-x-auto">
             <div dangerouslySetInnerHTML={{ __html: content }}></div>
           </div>
         )}
