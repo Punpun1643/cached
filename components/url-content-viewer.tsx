@@ -16,6 +16,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export function UrlContentViewer({ url }: { url: string }) {
   const [content, setContent] = useState<string | null>(null);
+  const [title, setTitle] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const pathname = usePathname();
@@ -98,10 +99,8 @@ export function UrlContentViewer({ url }: { url: string }) {
             <X className="h-4 w-4" />
           </Button>
         </div>
-        <CardTitle className="text-lg font-medium pr-10">
-          This is the url viewer
-        </CardTitle>
-        <CardDescription>https://google.com</CardDescription>
+        <CardTitle className="text-lg font-medium pr-10">{}</CardTitle>
+        <CardDescription>{url}</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 overflow-auto">
         {isLoading && <div>Loading content...</div>}
