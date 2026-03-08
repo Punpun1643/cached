@@ -15,7 +15,21 @@ export async function GET(request: Request) {
   }
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (compatible; URLStorer/1.0)',
+      },
+    });
+
+    if (!response.ok) {
+      return NextResponse.json(
+        {
+          error: `Failed to fetch: ${response.status} ${response.statusText}`
+        },
+        { status: 502 }
+      );
+    }
+
     const html = await response.text();
 
     const $ = cheerio.load(html);
@@ -72,7 +86,18 @@ export async function GET(request: Request) {
       },
       { status: 200 }
     );
-  } catch (err) {
+  } catch (err: unknown) {
+    // undici in Next.js 15 throws ResponseStatusCodeError for non-2xx responses
+    if (err instanceof Error && 'statusCode' in err) {
+      const statusCode = (err as { statusCode: number }).statusCode;
+      return NextResponse.json(
+        {
+          error: `The site returned ${statusCode}. It may block external requests.`
+        },
+        { status: 502 }
+      );
+    }
+
     console.error('Error fetching content:', err);
     return NextResponse.json(
       {

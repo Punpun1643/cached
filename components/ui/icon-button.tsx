@@ -33,7 +33,7 @@ interface IDialogButton {
   buttonSubmitText: string
 }
 
-const DialogButton = ({ onClick, icon: Icon, buttonText, submitIcon, buttonSubmitText }: IDialogButton) => {
+const DialogButton = ({ onClick, icon: Icon, buttonText, buttonSubmitText }: IDialogButton) => {
   const [url, setUrl] = useState("")
   const [tag, setTag] = useState("") // TODO: extend to support multiple tags
 
