@@ -13,17 +13,18 @@ import { cn } from '@/lib/utils';
 export default async function ProductsPage({
   searchParams
 }: {
-  searchParams: {
+  searchParams: Promise<{
     query: string;
     offset: string;
     status: string;
     url: string;
-  };
+  }>;
 }) {
-  const searchValue = searchParams.query ?? '';
-  const offset = Number(searchParams.offset) || 0;
-  const status = searchParams.status ?? 'all';
-  const selectedUrl = searchParams.url;
+  const params = await searchParams;
+  const searchValue = params.query ?? '';
+  const offset = Number(params.offset) || 0;
+  const status = params.status ?? 'all';
+  const selectedUrl = params.url;
 
   const { urls, newOffset, totalUrls } = await getUrls(
     searchValue,
