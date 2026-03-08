@@ -33,7 +33,7 @@ interface IDialogButton {
   buttonSubmitText: string
 }
 
-const DialogButton = ({ onClick, icon: Icon, buttonText, submitIcon, buttonSubmitText }: IDialogButton) => {
+const DialogButton = ({ onClick, icon: Icon, buttonText, buttonSubmitText }: IDialogButton) => {
   const [url, setUrl] = useState("")
   const [tag, setTag] = useState("") // TODO: extend to support multiple tags
 
@@ -47,7 +47,7 @@ const DialogButton = ({ onClick, icon: Icon, buttonText, submitIcon, buttonSubmi
   return (
       <Dialog>
         <DialogTrigger asChild>
-          <Button size="sm" className="h-8 gap-1">
+          <Button size="sm" className="h-8 gap-1.5 text-xs font-medium">
             {Icon && <Icon className="h-3.5 w-3.5" />}
             <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
               {buttonText}
@@ -56,40 +56,43 @@ const DialogButton = ({ onClick, icon: Icon, buttonText, submitIcon, buttonSubmi
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Add URL</DialogTitle>
-            <DialogDescription>
-              Add your URL with related attributes here. Click save when you're done.
+            <DialogTitle className="text-base">Add URL</DialogTitle>
+            <DialogDescription className="text-sm">
+              Add a URL with a tag to organize your links.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="url" className="text-right">
-                URL address
+            <div className="grid gap-2">
+              <Label htmlFor="url" className="text-sm font-medium">
+                URL
               </Label>
               <Input
                 id="url"
                 placeholder="https://example.com"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
-                className="col-span-3"
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="tag" className="text-right">
+            <div className="grid gap-2">
+              <Label htmlFor="tag" className="text-sm font-medium">
                 Tag
               </Label>
               <Input
                 id="tag"
-                placeholder="example"
+                placeholder="e.g. design, dev, reading"
                 value={tag}
                 onChange={(e) => setTag(e.target.value)}
-                className="col-span-3"
               />
             </div>
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <IconButton onClick={handleSubmit} icon={submitIcon} buttonText={buttonSubmitText} />
+              <Button variant="outline" size="sm">Cancel</Button>
+            </DialogClose>
+            <DialogClose asChild>
+              <Button onClick={handleSubmit} size="sm">
+                {buttonSubmitText}
+              </Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>
@@ -97,20 +100,20 @@ const DialogButton = ({ onClick, icon: Icon, buttonText, submitIcon, buttonSubmi
     )
 }
 
-const IconButton = React.forwardRef<HTMLButtonElement, IButtonProps>(({ 
-  onClick, 
-  icon: Icon, 
-  buttonText, 
-  variant = "default", 
-  asChild = false, 
+const IconButton = React.forwardRef<HTMLButtonElement, IButtonProps>(({
+  onClick,
+  icon: Icon,
+  buttonText,
+  variant = "default",
+  asChild = false,
   ...props }: IButtonProps, ref) => {
   return (
-    <Button 
-      size="sm" 
-      className="h-8 gap-1" 
-      onClick={onClick} 
-      variant={variant} 
-      ref={ref} 
+    <Button
+      size="sm"
+      className="h-8 gap-1"
+      onClick={onClick}
+      variant={variant}
+      ref={ref}
       {...props}>
       {Icon && <Icon className="h-3.5 w-3.5" />}
       <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">

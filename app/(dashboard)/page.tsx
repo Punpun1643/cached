@@ -13,17 +13,18 @@ import { cn } from '@/lib/utils';
 export default async function ProductsPage({
   searchParams
 }: {
-  searchParams: {
+  searchParams: Promise<{
     query: string;
     offset: string;
     status: string;
     url: string;
-  };
+  }>;
 }) {
-  const searchValue = searchParams.query ?? '';
-  const offset = Number(searchParams.offset) || 0;
-  const status = searchParams.status ?? 'all';
-  const selectedUrl = searchParams.url;
+  const params = await searchParams;
+  const searchValue = params.query ?? '';
+  const offset = Number(params.offset) || 0;
+  const status = params.status ?? 'all';
+  const selectedUrl = params.url;
 
   const { urls, newOffset, totalUrls } = await getUrls(
     searchValue,
@@ -34,16 +35,16 @@ export default async function ProductsPage({
   return (
     <div
       className={cn(
-        'grid gap-4',
+        'grid gap-6',
         selectedUrl ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'
       )}
     >
       <div className="md:overflow-auto md:max-h-[calc(100vh-4rem)]">
         <Tabs defaultValue="all">
-          <div className="flex items-center">
+          <div className="flex items-center justify-between mb-4">
             <UrlTabs />
-            <div className="ml-auto flex items-center gap-2">
-              <Button size="sm" variant="outline" className="h-8 gap-1">
+            <div className="flex items-center gap-2">
+              <Button size="sm" variant="outline" className="h-8 gap-1.5 text-xs font-medium">
                 <File className="h-3.5 w-3.5" />
                 <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                   Export

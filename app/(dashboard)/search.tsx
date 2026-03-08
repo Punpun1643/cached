@@ -40,12 +40,12 @@ export function SearchInput() {
 
   return (
     <form action={searchAction} className="relative ml-auto flex-1 md:grow-0">
-      <Search className="absolute left-2.5 top-[.75rem] h-4 w-4 text-muted-foreground" />
+      <Search className="absolute left-2.5 top-[.75rem] h-4 w-4 text-muted-foreground/60" />
       <Input
         name="query"
         type="search"
-        placeholder="Search..."
-        className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
+        placeholder="Search URLs..."
+        className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[320px] h-9 text-sm border-border/60 focus-visible:ring-1"
         defaultValue={searchParams.get('query')?.toString()}
       />
       <div className="absolute right-2 top-[.6rem] flex items-center gap-2">
@@ -58,7 +58,7 @@ export function SearchInput() {
             className="h-5 w-5 p-0 hover:bg-muted"
             onClick={handleClear}
           >
-            <X className="h-4 w-4" />
+            <X className="h-3.5 w-3.5" />
             <span className="sr-only">Clear search</span>
           </Button>
         )}

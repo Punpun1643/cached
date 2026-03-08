@@ -2,16 +2,16 @@
 
 import { handleAddUrl } from "@/lib/actions"
 import { DialogButton } from "@/components/ui/icon-button"
-import { PlusCircle } from "lucide-react"
+import { Plus } from "lucide-react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 const AddUrlButton = () => {
 
   const queryClient = useQueryClient()
   const mutation = useMutation({
-    mutationFn: ({ url, tag }: { url: string, tag: string }) => handleAddUrl(url, tag), 
+    mutationFn: ({ url, tag }: { url: string, tag: string }) => handleAddUrl(url, tag),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["uniqueTags"] }) 
+      queryClient.invalidateQueries({ queryKey: ["uniqueTags"] })
       alert("Url added successfully!")
     }
   })
@@ -21,7 +21,7 @@ const AddUrlButton = () => {
   }
 
   return (
-    <DialogButton onClick={handleClick} icon={PlusCircle} buttonText="Add URL" buttonSubmitText="Submit"/>
+    <DialogButton onClick={handleClick} icon={Plus} buttonText="Add URL" buttonSubmitText="Save"/>
   )
 }
 
