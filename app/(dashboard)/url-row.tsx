@@ -4,9 +4,10 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { Copy, MoreHorizontal } from 'lucide-react';
+import { Copy, MoreHorizontal, ExternalLink, Trash2 } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { SelectUrl, StatusEnum } from '@/lib/db/schema';
 import Link from 'next/link';
@@ -16,7 +17,6 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip';
-import { IconButton } from '@/components/ui/icon-button';
 import {
   fetchUniqueTags,
   handleDeleteUrl,
@@ -71,20 +71,27 @@ export function UrlRow({ url }: { url: SelectUrl }) {
   };
 
   return (
-    <TableRow>
+    <TableRow className="group">
       <TableCell className="font-medium">
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-2">
           <Link
             href={createUrlWithParams()}
-            className="text-blue-600 underline decoration-sky-500 visited:text-zinc-500 visited:decoration-gray-500"
+            className="text-sm text-foreground hover:text-foreground/80 transition-colors line-clamp-1"
             scroll={false}
           >
             {url.title}
           </Link>
-          <TooltipProvider>
+          <TooltipProvider delayDuration={0}>
             <Tooltip>
               <TooltipTrigger asChild>
-                <IconButton variant="ghost" icon={Copy} onClick={handleClick} />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground hover:text-foreground shrink-0"
+                  onClick={handleClick}
+                >
+                  <Copy className="h-3 w-3" />
+                </Button>
               </TooltipTrigger>
               <TooltipContent>
                 <p>Copy URL</p>
@@ -99,35 +106,50 @@ export function UrlRow({ url }: { url: SelectUrl }) {
           options={StatusEnum.options}
           onValueChange={handleUpdateUrlStatus}
           placeholder={url.status}
+          type="status"
         />
       </TableCell>
-      <TableCell className="hidden md:table-cell capitalize">
+      <TableCell className="hidden md:table-cell">
         <ToggleableBadge
           url={url}
           options={data?.map(({ tag }) => tag) || []}
           onValueChange={handleUpdateUrlTag}
           placeholder={url.tag as string}
+          type="tag"
         />
       </TableCell>
-      <TableCell className="hidden md:table-cell">{url.dateAdded}</TableCell>
+      <TableCell className="hidden md:table-cell text-muted-foreground text-sm tabular-nums">
+        {url.dateAdded}
+      </TableCell>
       <TableCell>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button aria-haspopup="true" size="icon" variant="ghost">
+            <Button
+              aria-haspopup="true"
+              size="icon"
+              variant="ghost"
+              className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity"
+            >
               <MoreHorizontal className="h-4 w-4" />
               <span className="sr-only">Toggle menu</span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem className="cursor-pointer">Edit</DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer">
+          <DropdownMenuContent align="end" className="w-40">
+            <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="cursor-pointer text-sm">
+              <ExternalLink className="mr-2 h-3.5 w-3.5" />
+              Edit
+            </DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer text-sm">
               Archive
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="cursor-pointer">
               <form action={handleDeleteUrlWithId}>
-                <button type="submit">
-                  <span className="text-red-600">Delete</span>
+                <button type="submit" className="flex items-center text-sm text-destructive">
+                  <Trash2 className="mr-2 h-3.5 w-3.5" />
+                  Delete
                 </button>
               </form>
             </DropdownMenuItem>
